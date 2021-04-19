@@ -1,0 +1,73 @@
+﻿
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+/*input,
+select,
+textarea {
+    max-width: 280px;
+}*/
+
+* {
+    direction: rtl;
+}
+
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+/*.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}*/
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+
+nav.navbar-expand-lg {
+    margin-top: -8px;
+    font-weight: 500;
+    font-size: large;
+    color: green !important;
+}
+
+nav div.container-fluid {
+    background: #624097 !important;
+}
+
+nav.navbar-expand-lg div ul li {
+    padding: 8px;
+}
+
+    nav.navbar-expand-lg div ul li:hover {
+        border-bottom: 1px solid white;
+    }
+
+    nav.navbar-expand-lg div ul li a {
+        color: azure;
+    }
+
+@media(min-width:768px) {
+    nav div div.loginAndRegister {
+        padding-right: 30%;
+        
+    }
+}
+
+
+
+
+
+

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ac84e3f78bc74637a4c3606bd79a6c51" Name="Diagram1">
+        <EntityTypeShape EntityType="MyProjectDBModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyProjectDBModel.AspNetRole" Width="1.5" PointX="0.75" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyProjectDBModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyProjectDBModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyProjectDBModel.AspNetUser" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyProjectDBModel.Beneficier" Width="1.5" PointX="10.5" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyProjectDBModel.BeneficierMedicineRequest" Width="1.5" PointX="15.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyProjectDBModel.BMedicineRequestStatu" Width="1.5" PointX="21" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyProjectDBModel.City" Width="1.5" PointX="6" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyProjectDBModel.Complaint" Width="1.5" PointX="12.75" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyProjectDBModel.ComplaintStatu" Width="1.5" PointX="18" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyProjectDBModel.Doctor" Width="1.5" PointX="10.5" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyProjectDBModel.Donator" Width="1.5" PointX="10.5" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyProjectDBModel.Gender" Width="1.5" PointX="6" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyProjectDBModel.Governarte" Width="1.5" PointX="3.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyProjectDBModel.Medicine" Width="1.5" PointX="13.5" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyProjectDBModel.Member" Width="1.5" PointX="8.25" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyProjectDBModel.Pharamacy" Width="1.5" PointX="10.5" PointY="17.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyProjectDBModel.PharmacyMedicineRequest" Width="1.5" PointX="15.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyProjectDBModel.PharmacyWorker" Width="1.5" PointX="12.75" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyProjectDBModel.PhMedicineRequestStatu" Width="1.5" PointX="18" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyProjectDBModel.Status" Width="1.5" PointX="13.5" PointY="18" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyProjectDBModel.sysdiagram" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyProjectDBModel.Worker" Width="1.5" PointX="10.5" PointY="14.75" IsExpanded="true" />
+        <AssociationConnector Association="MyProjectDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_Member_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_Beneficier_Member" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_BeneficierMedicineRequest_Beneficier" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_BeneficierMedicineRequest_BeneficierMedicineRequest" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_BeneficierMedicineRequest_Donator" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_BeneficierMedicineRequest_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_BMedicineRequestStatus_BeneficierMedicineRequest" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_BMedicineRequestStatus_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_City_Governarte" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_Member_City" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_Complaint_Doctor" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_ComplaintStatus_ComplaintStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_ComplaintStatus_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_Doctor_Member" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_Donator_Member" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_Member_Gender" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_RequestMedicine_Medicine" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_Worker_Member" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_PharmacyWorkers_Pharamacy" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_RequestMedicine_Pharamacy" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_RequestMedicine_Pharamacy1" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_PharmacyMedicineRequest_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_PhMedicineRequestStatus_PhMedicineRequestStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_PharmacyWorkers_Worker" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.FK_PhMedicineRequestStatus_Status" ManuallyRouted="false" />
+        <AssociationConnector Association="MyProjectDBModel.AspNetUserRoles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
