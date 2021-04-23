@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -12,7 +13,7 @@ using GradProjectV5.Models;
 
 namespace GradProjectV5.Controllers
 {
-    [Authorize]
+    [SessionState(System.Web.SessionState.SessionStateBehavior.Required)]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -61,6 +62,12 @@ namespace GradProjectV5.Controllers
             return View();
         }
 
+
+        [AllowAnonymous] 
+        public ActionResult Register()
+        {
+            return View();
+        }
         //
         // POST: /Account/Login
         [HttpPost]
@@ -134,43 +141,49 @@ namespace GradProjectV5.Controllers
             }
         }
 
-        //
-        // GET: /Account/Register
-        [AllowAnonymous]
-        public ActionResult Register()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Account/Register
+  
         [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model )
         {
+            MyProjectDBEntities db = new MyProjectDBEntities();
+
+
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                var user = new ApplicationUser() { UserName = model.Email , Email = model.Email , PhoneNumber = model.Password};
+              var result =   await UserManager.CreateAsync(user, model.Password);
+                 if (result.Succeeded)
+                 {
+                     await SignInManager.SignInAsync(user, false, false);
+                     if (Session["Mid"] != null)
+                     {
+                         int id = Convert.ToInt32(Session["Mid"].ToString());
+                         Session.Remove("Mid");
+                         var member = db.Members.Find(id);
+                         member.UserId = user.Id;
+                         db.Entry(member).State = EntityState.Modified;
+                         db.SaveChanges();
+                     }
+                     return RedirectToAction("index", "Home");
 
-                    return RedirectToAction("Index", "Home");
+                 }
+
+                 foreach (var error in result.Errors)
+                 {
+                  ModelState.AddModelError("",error);
+
                 }
-                AddErrors(result);
             }
 
-            // If we got this far, something failed, redisplay form
             return View(model);
+
+
+
+
+
         }
+
+        
 
         //
         // GET: /Account/ConfirmEmail

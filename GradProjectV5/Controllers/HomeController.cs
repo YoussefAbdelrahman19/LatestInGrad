@@ -67,7 +67,7 @@ namespace GradProjectV5.Controllers
         
 
         [HttpPost]
-    public dynamic SaveComplaint(ComplainMember c)
+    public ActionResult SaveComplaint(ComplainMember c)
         {
             MyProjectDBEntities db = new MyProjectDBEntities();
             ComplainMember complainMember = new ComplainMember();
@@ -167,5 +167,18 @@ namespace GradProjectV5.Controllers
   
 
         #endregion
+        //for Pharmacy View
+        public ActionResult Pharamacy()
+        {
+
+            return View();
+        }
+        public ActionResult GetPharamacyData()
+        {
+
+            return View();
+        }
+
     }
+    
 }

@@ -10,7 +10,7 @@ using GradProjectV5.Models;
 
 namespace GradProjectV5.Controllers
 {
-    [Authorize]
+  
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;

@@ -157,18 +157,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ajax Services\AppliedpageInMiddle.aspx.cs">
-      <DependentUpon>AppliedpageInMiddle.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Ajax Services\AppliedpageInMiddle.aspx.designer.cs">
-      <DependentUpon>AppliedpageInMiddle.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Annotations\AspNetUser.cs" />
     <Compile Include="Annotations\Complaint.cs" />
     <Compile Include="Annotations\Doctor.cs" />
     <Compile Include="Annotations\Medicine.cs" />
-    <Compile Include="Annotations\Member.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -176,6 +167,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\list.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MEMBERController.cs" />
     <Compile Include="Global.asax.cs">
@@ -262,93 +254,6 @@
     <Compile Include="Models\PhMedicineRequestStatu.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Previous Model\AspNetRole.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Previous Model\AspNetUser.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Previous Model\AspNetUserClaim.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Previous Model\AspNetUserLogin.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Previous Model\Beneficier.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Previous Model\BeneficierMedicineRequest.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Previous Model\BMedicineRequestStatu.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Previous Model\City.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Previous Model\Complaint.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Previous Model\ComplaintStatu.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Previous Model\C__MigrationHistory.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Previous Model\Doctor.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Previous Model\Donator.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Previous Model\Gender.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Previous Model\Governarte.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Previous Model\Medicine.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Previous Model\Member.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Previous Model\Model1.Context.cs">
-      <DependentUpon>Model1.Context.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Models\Previous Model\Model1.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Models\Previous Model\Model1.Designer.cs">
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Models\Previous Model\Pharamacy.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Previous Model\PharmacyMedicineRequest.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Previous Model\PharmacyWorker.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Previous Model\PhMedicineRequestStatu.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Previous Model\Status.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Previous Model\sysdiagram.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Previous Model\Worker.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Status.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -366,13 +271,14 @@
     <Compile Include="ViewModels\ComplainMember.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Ajax Services\AppliedpageInMiddle.aspx" />
     <Content Include="Content\all.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dropzone.css" />
     <Content Include="Content\Images\DocotorHomeScreen.png" />
     <Content Include="Content\Images\doctors-banner.svg" />
+    <Content Include="Content\Images\Medicinebanner.jpg" />
+    <Content Include="Content\Images\Medicines.jpg" />
     <Content Include="Content\Images\medicines.svg" />
     <Content Include="Content\Images\SiteLogo.svg" />
     <Content Include="Content\Images\uploadfile.png" />
@@ -390,27 +296,11 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Previous Model\Model1.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\Previous Model\Model1.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\all.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\Previous Model\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Previous Model\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
+    <Content Include="Content\Images\doctor.webp" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -418,7 +308,6 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="Content\Images\doctor.webp" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\dropzone.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -455,7 +344,6 @@
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
@@ -473,6 +361,10 @@
     <Content Include="Views\Home\AskDoctor.cshtml" />
     <Content Include="Views\Home\AskDoctorData.cshtml" />
     <Content Include="Upload.ashx" />
+    <Content Include="Views\Home\Pharamacy.cshtml" />
+    <Content Include="Views\Home\GetPharamacyData.cshtml" />
+    <Content Include="Views\Shared\_LayoutPharmacy.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

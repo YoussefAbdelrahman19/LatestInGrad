@@ -109,4 +109,6 @@ D:\Web Projects\Source Code\GradProjectV5\GradProjectV5\bin\Microsoft.Owin.Secur
 D:\Web Projects\Source Code\GradProjectV5\GradProjectV5\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\Web Projects\Source Code\GradProjectV5\GradProjectV5\obj\Debug\GradProjectV5.dll
 D:\Web Projects\Source Code\GradProjectV5\GradProjectV5\obj\Debug\GradProjectV5.pdb
-D:\Web Projects\Source Code\GradProjectV5\GradProjectV5\obj\Debug\GradProjectV5.csprojResolveAssemblyReference.cache
+D:\Web Projects\Source Code\GradProjectV5\GradProjectV5\obj\Debug\GradProjectV5.csprojAssemblyReference.cache
+D:\Web Projects\Source Code\GradProjectV5\GradProjectV5\obj\Debug\GradProjectV5.csproj.CoreCompileInputs.cache
+D:\Web Projects\Source Code\GradProjectV5\GradProjectV5\obj\Debug\GradProjectV5.csproj.CopyComplete

@@ -10,6 +10,7 @@ using GradProjectV5.Models;
 
 namespace GradProjectV5.Controllers
 {
+    [SessionState(System.Web.SessionState.SessionStateBehavior.Required)]
     public class MEMBERController : Controller
     {
         private MyProjectDBEntities db = new MyProjectDBEntities();
@@ -24,15 +25,27 @@ namespace GradProjectV5.Controllers
         [HttpGet]
         public ActionResult GetAllGovernrates()
         {
-            var tmp =  db.Governartes.Select(x =>new
+            var tmp = db.Governartes.Select(x => new
             {
                 x.ID,
                 x.GovernarteName
             }).ToList();
-         
-            return Json(tmp , JsonRequestBehavior.AllowGet);
+
+            return Json(tmp, JsonRequestBehavior.AllowGet);
         }
 
+
+        [HttpGet]
+        public ActionResult LoadGender()
+        {
+            var tmp = db.Genders.Where(x => x.IsDeleted == false).Select(x => new
+            {
+                x.ID,
+                x.GenderName
+            }).ToList();
+
+            return Json(tmp, JsonRequestBehavior.AllowGet);
+        }
         [HttpPost]
         public ActionResult GetGovCities(int governmentid)
         {
@@ -47,50 +60,103 @@ namespace GradProjectV5.Controllers
             return Json(tmp, JsonRequestBehavior.AllowGet);
         }
 
+
+
         // GET: /Member/Edit/5
         [HttpPost]
-        public ActionResult SaveMember(
-            string name , 
+        public dynamic SaveMember(
+            string name,
             string phone,
             string nationalid,
-            string address , 
-            string email , 
-            int jid
-            
+            string address,
+            string email,
+            int jid,
+            int GenderId
 
-            )
+
+
+        )
         {
+
+
             Member m = new Member();
-            
-            
-          
+
+
+
             m.FullName = name;
+            m.GenderId = GenderId;
             m.Address = address;
             m.Email = email;
             m.PhoneNo = phone;
             m.CityId = jid;
             m.NationalId = nationalid;
             m.IsDeleted = false;
-            if (Session["memberid"] == null)
-            {
+           
                 db.Members.Add(m);
                 db.SaveChanges();
+                Session["Mid"] = m.ID;
+                return true;
 
-            }
-            else
-            {
-                int id = Convert.ToInt32(Session["memberid"].ToString());
-                var oldvalues = db.Members.Find(id);
-                m.ID = oldvalues.ID;
-                db.Entry(oldvalues).CurrentValues.SetValues(m);
-                db.SaveChanges();
-                Session.Remove("memberid");
-            }
+        
 
 
 
-            return Json("data saved", JsonRequestBehavior.AllowGet);
+
         }
+
+        //// GET: /Member/Edit/5
+        //[HttpPost]
+        //public dynamic SaveMember(
+        //    string name,
+        //    string phone,
+        //    string nationalid,
+        //    string address,
+        //    string email,
+        //    int jid,
+        //    int GenderId
+
+
+
+        //    )
+        //{
+
+
+        //        Member m = new Member();
+
+
+
+        //        m.FullName = name;
+        //        m.GenderId = GenderId;
+        //        m.Address = address;
+        //        m.Email = email;
+        //        m.PhoneNo = phone;
+        //        m.CityId = jid;
+        //        m.NationalId = nationalid;
+        //        m.IsDeleted = false;
+        //        if (Session["memberid"] == null)
+        //    {
+        //        db.Members.Add(m);
+        //        db.SaveChanges();
+        //        Session["Mid"] = m.ID;
+        //        return true;
+
+        //    }
+        //        else
+        //        {
+        //            int id = Convert.ToInt32(Session["memberid"].ToString());
+        //            Session.Remove("memberid");
+        //            var oldvalues = db.Members.Find(id);
+        //            m.ID = oldvalues.ID;
+        //            db.Entry(oldvalues).CurrentValues.SetValues(m);
+        //            db.SaveChanges();
+        //            Session["Mid"] = m.ID;
+
+        //            return true;
+        //        }
+
+
+
+        //}
 
 
         [HttpGet]
@@ -100,7 +166,7 @@ namespace GradProjectV5.Controllers
             {
                 x.ID,
                 FullName = x.FullName == null ? "" : x.FullName,
-              
+
 
 
             }).ToList();
@@ -114,16 +180,14 @@ namespace GradProjectV5.Controllers
             var tmp = db.Members.Where(x => x.IsDeleted == false).Select(x => new
             {
                 x.ID,
-                x.NationalId,
+                NationalId =x.NationalId == null ?"":x.NationalId,
                 Address = x.Address == null ? "" : x.Address,
                 Email = x.Email == null ? "" : x.Email,
                 PhoneNo = x.PhoneNo == null ? "" : x.PhoneNo,
                 FullName = x.FullName == null ? "" : x.FullName,
                 CityName = x.CityId == null ? "" : x.City.CityName,
                 GovernarteName = x.City.GovernerateId == null ? "" : x.City.Governarte.GovernarteName,
-            
-
-               
+                GenderName = x.GenderId == null ? "" : x.Gender.GenderName,
             }).ToList();
 
             return Json(tmp, JsonRequestBehavior.AllowGet);
@@ -138,11 +202,12 @@ namespace GradProjectV5.Controllers
             {
                 x.ID,
                 x.NationalId,
+                GenderId = x.GenderId == null ? 0 : x.GenderId,
                 Address = x.Address == null ? "" : x.Address,
                 Email = x.Email == null ? "" : x.Email,
                 PhoneNo = x.PhoneNo == null ? "" : x.PhoneNo,
                 FullName = x.FullName == null ? "" : x.FullName,
-                CityID = x.CityId == null ?0 : x.CityId,
+                CityID = x.CityId == null ? 0 : x.CityId,
                 governmentid = x.CityId == null ? 0 : x.City.GovernerateId
 
 

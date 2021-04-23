@@ -13,11 +13,11 @@ namespace GradProjectV5.Models
 
     public class DoctorAnnotations
     {
-        public int Id { get; set; }
-        public string Speciality { get; set; }
-        public Nullable<int> YearsOfExperience { get; set; }
-        public Nullable<int> Age { get; set; }
-        public Nullable<bool> IsDeleted { get; set; }
-        public Nullable<int> MemberId { get; set; }
+        //public int Id { get; set; }
+        //public string Speciality { get; set; }
+        //public Nullable<int> YearsOfExperience { get; set; }
+        //public Nullable<int> Age { get; set; }
+        //public Nullable<bool> IsDeleted { get; set; }
+        //public Nullable<int> MemberId { get; set; }
     }
 }

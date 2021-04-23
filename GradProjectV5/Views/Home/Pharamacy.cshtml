@@ -1,0 +1,86 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutPharmacy.cshtml";
+}
+<style>
+   #submit{
+       font-weight:400;
+   }
+    #submit:hover{
+       background:#5bc0de;
+       color:white;
+    }
+
+</style>
+
+<p class="pt-5"></p>
+<div class="container-fluid">
+    <img class="img-fluid " src="~/Content/Images/Medicinebanner.jpg" alt="Medicine Image" />
+
+</div>
+<div class="container bg-white">
+    <div class="row  ">
+        <p class="lead fs-2 text-center p-5 " style="font-weight:400">
+            أضف صيدليتك و انضم لطبيب الخير
+        </p>
+        <form class="border border-2 p-3 ">
+            <p class="fs-4 lead text-center text-info p-4" style="font-weight:500">بيانات الصيدلية</p>
+
+            @* The next are two labels per line *@
+            <div class="row py-4 my-3">
+                <div class="col">
+                    <label class="p-2 text-info lead fs-4"style="font-weight:400" >اسم الصيدلية</label>
+                    <input type="text" class="form-control h-75" placeholder="ادخل اسم الصيدلية" >
+                </div>
+                <div class="col">
+                    <label class="p-2 text-info lead fs-4" style="font-weight:400">تليفون الصيدلية</label>
+                    <input type="number" class="form-control h-75" placeholder="التليفون" >
+                </div>
+            </div>
+            @* End *@
+            @* The next are two labels per line *@
+            <div class="row py-4 my-3">
+                <div class="col">
+                    <label class="p-2 text-info lead fs-4" style="font-weight:400">المدينة</label>
+                    <input type="text" class="form-control h-75" placeholder="المدينة">
+                </div>
+                <div class="col">
+                    <label class="p-2 text-info lead fs-4" style="font-weight:400">العنوان</label>
+                    <input type="text" class="form-control h-75" placeholder="العنوان">
+                </div>
+            </div>
+            @* End *@
+            @* بيانات العامل بالصيدلية *@
+            <p class="fs-4 lead text-center text-info pt-5" style="font-weight:500">بيانات الشخصية</p>
+
+
+            <div class="row py-4 my-3">
+                <div class="col">
+                    <label class="p-2 text-info lead fs-4" style="font-weight:400">الاسم</label>
+                    <input type="text" class="form-control h-75" placeholder="الاسم">
+                </div>
+                <div class="col">
+                    <label class="p-2 text-info lead fs-4" style="font-weight:400">البريد الإلكتروني</label>
+                    <input type="text" class="form-control h-75" placeholder="البريد الإلكتروني">
+                </div>
+
+                
+            </div>
+            @*TextArea *@
+            <div class="col">
+                <label class="p-2 text-info lead fs-4" style="font-weight:400">بيانات العلاج   </label>
+                <textarea class="form-control" placeholder="ادخل وصف وكمية العلاج المتوفر لديك"  style="height: 100px"></textarea>
+
+            </div>
+            <div class="text-center">
+
+                <button type="submit" id="submit" class="p-3 m-4 w-25 lead rounded-pill fs-3 btn border border-2 border-info " >حفظ</button>
+
+            </div>
+
+        </form>
+
+
+
+    </div>
+</div>
+

@@ -21,7 +21,7 @@
                     <div class="col-sm-2">
                         @Html.LabelFor(model => model.FullName, new { @class = "control-label" })
 
-                        
+
                     </div>
                     <div class="col-sm-10">
                         <input class="form-control" id="FullName" name="FullName" type="text">
@@ -99,6 +99,16 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <div class="col-sm-2">
+                        <label class="control-label ">الجنس</label>
+
+                    </div>
+                    <div class="col-sm-10">
+                        <select id="ddl_Gender" class="form-control"></select>
+                    </div>
+                </div>
+
 
                 <div class="form-group">
                     <div class=" col-sm-4">
@@ -119,19 +129,38 @@
 
 
 
+
 <div id="GetAllMembersDiv" class="table-responsive">
 
 
 </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
     <script>
 
         $(document).ready(function () {
+
+            loadGender();
             LoadGovernrate();
             loadCity();
-            GetAllMembers();
+            //GetAllMembers();
         });
+
+
+          function loadGender() {
+            $('#ddl_Gender option').each(function () {
+                $(this).remove();
+            });
+            var url = "@Url.Action("LoadGender", "MEMBER")";
+              var result = CreateAjaxRequest(url, "get", {});
+            $("#ddl_Gender").append('<option >--Please Select--</option>');
+            for (var i in result) {
+                $("#ddl_Gender").append('<option value=' + result[i].ID + '>' + result[i].GenderName + '</option>');
+            }
+
+        }
+
         function LoadGovernrate() {
             $('#ddl_Governrate option').each(function () {
                 $(this).remove();
@@ -139,8 +168,6 @@
             var url = "@Url.Action("GetAllGovernrates","MEMBER")";
             var type = "GET";
             var result = CreateAjaxRequest(url, type, {});
-            $("#ddl_Governrate").append('<option > --Please Select--</option>');
-
             for (var i in result) {
                 $("#ddl_Governrate").append('<option value=' + result[i].ID + '>' + result[i].GovernarteName + '</option>');
             }
@@ -160,6 +187,7 @@
             for (var i in result) {
                 $("#ddl_City").append('<option value=' + result[i].ID + '>' + result[i].CityName + '</option>');
             }
+        }
 
 
 
@@ -173,6 +201,8 @@
                 var NationalId = $("#NationalId ").val();
                 var Address = $("#Address").val();
                 var CityID = $("#ddl_City").val();
+                var Genderid = $("#ddl_Gender").val();
+         
 
 
 
@@ -180,13 +210,13 @@
                     PhoneNo == "" ||
                     Email == "" ||
                     Address == "" ||
-                    CityID == "")
+                    CityID == "" ||
+                    Genderid == null 
+                   )
                     alert("Please enter all required data");
                 else {
-                    debugger;
-                    var type = "POST";
                     var url = "@Url.Action("SaveMember","MEMBER")";
-                    var result = CreateAjaxRequest(url, type,
+                    var result = CreateAjaxRequest(url, "post",
                         {
                             name: FullName,
                             phone: PhoneNo,
@@ -194,23 +224,28 @@
                             Email: Email,
                             address: Address,
                             IDNumber: NationalId,
-                            jid: CityID
+                            jid: CityID,
+                            GenderId: Genderid
+
 
                         });
-                    alert(result);
-                    ClearAllFormData();
-                    GetAllMembers();
+
+                    if (result != null) {
+                        window.location.href = "@Url.Action("Register","Account")";
+                        ClearAllFormData();
+
+                    }
+                   // GetAllMembers();
 
                 }
 
 
             }
             function GetAllMembers() {
-                var type = "GET";
                 var url = "@Url.Action("LoadAllMembers","MEMBER")";
 
                 $("#GetAllMembersDiv").html('');
-                var result = CreateAjaxRequest(url, type, {});
+                var result = CreateAjaxRequest(url, "get", {});
 
                 if (result != null) {
                     if (result.length > 0) {
@@ -220,6 +255,7 @@
                         tr += '<thead>';
                         tr += '   <tr>';
                         tr += '       <th>Full Name</th>';
+                        tr += '       <th>Gender</th>';
                         tr += '       <th> Phone Number</th>';
                         tr += '       <th>Email</th>';
                         tr += '       <th>Address </th>';
@@ -237,14 +273,15 @@
                         for (var i = 0; i < result.length; i++) {
                             tr += '<tr>';
                             tr += '<td>' + result[i].FullName + '</td>';
+                            tr += '<td>' + result[i].GenderName + '</td>';
                             tr += '<td>' + result[i].PhoneNo + '</td>';
                             tr += '<td>' + result[i].Email + '</td>';
                             tr += '<td>' + result[i].Address + '</td>';
                             tr += '<td>' + result[i].NationalId + '</td>';
                             tr += '<td>' + result[i].GovernarteName + '</td>';
                             tr += '<td>' + result[i].CityName + '</td>';
-                            tr += '<td><a href="#" onclick="EditThisMember(' + result[i].ID + ');return false;"><i class="glyphicon glyphicon-edit" style="color:blue;font-weight:bold"></i></a></td>';
-                            tr += '<td><a href="#" onclick="DeleteThisMember(' + result[i].ID + ');return false;"><i class="glyphicon glyphicon-trash" style="color:red;font-weight:bold;"></i></a></td>';
+                            tr += '<td><a href="#" onclick="EditThisMember(' + result[i].ID + ');return false;"><i class="fa fa-edit" style="color:blue;font-weight:bold"></i></a></td>';
+                            tr += '<td><a href="#" onclick="DeleteThisMember(' + result[i].ID + ');return false;"><i class="fa fa-trash" style="color:red;font-weight:bold;"></i></a></td>';
                             tr += '</tr>';
                         }
 
@@ -259,13 +296,18 @@
             }
 
             function EditThisMember(mid) {
+
                 $(window).scrollTop(0);
-                var type = "POST";
+                loadGender();
+
                 var url = "@Url.Action("LoadMemberForEdit","MEMBER")";
 
-                var result = CreateAjaxRequest(url, type, { memberid: mid });
+                var result = CreateAjaxRequest(url, "post", { memberid: mid });
                 for (var i = 0; i < result.length; i++) {
                     $("#FullName ").val(result[i].FullName);
+
+                    $("#ddl_Gender").val(result[i].GenderId);
+
                     $("#Phone").val(result[i].PhoneNo);
                     $("#Email").val(result[i].Email);
                     $("#NationalId ").val(result[i].NationalId);
@@ -323,7 +365,7 @@
                 return resultData;
             }
 
-        }
-   </script>
-   
+
+    </script>
+
 }
