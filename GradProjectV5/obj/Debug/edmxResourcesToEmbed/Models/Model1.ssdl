@@ -178,14 +178,13 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="FullName" Type="nvarchar(max)" />
     <Property Name="NationalId" Type="nvarchar(max)" />
-    <Property Name="Email" Type="nvarchar(max)" />
     <Property Name="PhoneNo" Type="nvarchar(max)" />
     <Property Name="CityId" Type="int" />
     <Property Name="Address" Type="nvarchar(max)" />
     <Property Name="GenderId" Type="int" />
     <Property Name="IsDeleted" Type="bit" />
     <Property Name="UserId" Type="nvarchar" MaxLength="128" />
-    <Property Name="Age" Type="int" />
+    <Property Name="Age" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Pharamacy">
     <Key>

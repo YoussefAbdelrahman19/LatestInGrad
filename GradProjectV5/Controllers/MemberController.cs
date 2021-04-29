@@ -22,6 +22,10 @@ namespace GradProjectV5.Controllers
             return View();
         }
 
+
+        
+      
+
         [HttpGet]
         public ActionResult GetAllGovernrates()
         {
@@ -69,7 +73,7 @@ namespace GradProjectV5.Controllers
             string phone,
             string nationalid,
             string address,
-            string email,
+            string Age,
             int jid,
             int GenderId
 
@@ -86,7 +90,7 @@ namespace GradProjectV5.Controllers
             m.FullName = name;
             m.GenderId = GenderId;
             m.Address = address;
-            m.Email = email;
+            m.Age = Age;
             m.PhoneNo = phone;
             m.CityId = jid;
             m.NationalId = nationalid;
@@ -182,7 +186,7 @@ namespace GradProjectV5.Controllers
                 x.ID,
                 NationalId =x.NationalId == null ?"":x.NationalId,
                 Address = x.Address == null ? "" : x.Address,
-                Email = x.Email == null ? "" : x.Email,
+                
                 PhoneNo = x.PhoneNo == null ? "" : x.PhoneNo,
                 FullName = x.FullName == null ? "" : x.FullName,
                 CityName = x.CityId == null ? "" : x.City.CityName,
@@ -204,7 +208,7 @@ namespace GradProjectV5.Controllers
                 x.NationalId,
                 GenderId = x.GenderId == null ? 0 : x.GenderId,
                 Address = x.Address == null ? "" : x.Address,
-                Email = x.Email == null ? "" : x.Email,
+                
                 PhoneNo = x.PhoneNo == null ? "" : x.PhoneNo,
                 FullName = x.FullName == null ? "" : x.FullName,
                 CityID = x.CityId == null ? 0 : x.CityId,

@@ -41,11 +41,12 @@
                 <br />
                 <div class="form-group">
                     <div class="col-sm-2">
-                        @Html.LabelFor(model => model.Email, new { @class = "control-label" })
+                        <label class="control-label " for="Address">العمر  </label>
+
+
                     </div>
                     <div class="col-sm-10">
-                        <input class="form-control" id="Email" name="Email" type="text">
-                        @Html.ValidationMessageFor(model => model.Email)
+                        <input type="number" id="txt_age"  class="form-control"/>
                     </div>
                 </div>
 
@@ -114,7 +115,7 @@
                     <div class=" col-sm-4">
                     </div>
                     <div class=" col-sm-4">
-                        <input type="button" onclick="AddMember();" value="حفظ" class="btn btn-primary" />
+                        <input type="button" onclick="AddMember();" value="التالي" class="btn btn-primary" />
                     </div>
                     <div class=" col-sm-4">
                     </div>
@@ -197,7 +198,7 @@
 
                 var FullName = $("#FullName ").val();
                 var PhoneNo = $("#Phone").val();
-                var Email = $("#Email").val();
+                var age = $("#txt_age").val();
                 var NationalId = $("#NationalId ").val();
                 var Address = $("#Address").val();
                 var CityID = $("#ddl_City").val();
@@ -208,9 +209,9 @@
 
                 if (FullName == "" ||
                     PhoneNo == "" ||
-                    Email == "" ||
+                    age == "" ||
                     Address == "" ||
-                    CityID == "" ||
+                    CityID == null ||
                     Genderid == null 
                    )
                     alert("Please enter all required data");
@@ -221,7 +222,7 @@
                             name: FullName,
                             phone: PhoneNo,
                             nationalid: NationalId,
-                            Email: Email,
+                            Age: age,
                             address: Address,
                             IDNumber: NationalId,
                             jid: CityID,
@@ -257,7 +258,6 @@
                         tr += '       <th>Full Name</th>';
                         tr += '       <th>Gender</th>';
                         tr += '       <th> Phone Number</th>';
-                        tr += '       <th>Email</th>';
                         tr += '       <th>Address </th>';
                         tr += '       <th>National Id </th>';
                         tr += '       <th>Governrate </th>';
@@ -275,7 +275,6 @@
                             tr += '<td>' + result[i].FullName + '</td>';
                             tr += '<td>' + result[i].GenderName + '</td>';
                             tr += '<td>' + result[i].PhoneNo + '</td>';
-                            tr += '<td>' + result[i].Email + '</td>';
                             tr += '<td>' + result[i].Address + '</td>';
                             tr += '<td>' + result[i].NationalId + '</td>';
                             tr += '<td>' + result[i].GovernarteName + '</td>';
@@ -309,7 +308,6 @@
                     $("#ddl_Gender").val(result[i].GenderId);
 
                     $("#Phone").val(result[i].PhoneNo);
-                    $("#Email").val(result[i].Email);
                     $("#NationalId ").val(result[i].NationalId);
                     $("#Address").val(result[i].Address);
                     LoadGovernrate();
@@ -339,7 +337,6 @@
 
                 $("#FullName ").val(null);
                 $("#Phone").val(null);
-                $("#Email").val(null);
                 $("#NationalId ").val(null);
                 $("#Address").val(null);
                 $("#ddl_Governrate").val(null);

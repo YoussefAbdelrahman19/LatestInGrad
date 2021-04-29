@@ -26,14 +26,13 @@ namespace GradProjectV5.Models
         public int ID { get; set; }
         public string FullName { get; set; }
         public string NationalId { get; set; }
-        public string Email { get; set; }
         public string PhoneNo { get; set; }
         public Nullable<int> CityId { get; set; }
         public string Address { get; set; }
         public Nullable<int> GenderId { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
         public string UserId { get; set; }
-        public Nullable<int> Age { get; set; }
+        public string Age { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

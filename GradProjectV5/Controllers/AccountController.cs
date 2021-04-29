@@ -23,7 +23,7 @@ namespace GradProjectV5.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -35,9 +35,9 @@ namespace GradProjectV5.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -63,11 +63,7 @@ namespace GradProjectV5.Controllers
         }
 
 
-        [AllowAnonymous] 
-        public ActionResult Register()
-        {
-            return View();
-        }
+
         //
         // POST: /Account/Login
         [HttpPost]
@@ -127,7 +123,7 @@ namespace GradProjectV5.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -141,7 +137,34 @@ namespace GradProjectV5.Controllers
             }
         }
 
-  
+
+        [HttpGet]
+        public dynamic LoadRoles()
+        {
+
+            var context = new ApplicationDbContext();
+            var allroles = context.Roles.ToList();
+
+            var tmp = allroles.Where(x =>!x.Name.Contains("Admin")).Select(x =>new{
+                x.Id,
+                x.Name
+            }).ToList();
+
+            return Json(tmp , JsonRequestBehavior.AllowGet);
+
+        }
+        [AllowAnonymous]
+        public dynamic Register()
+        {
+           // if (Session["Mid"] == null) 
+              //  return RedirectToAction("Create", "MEMBER");
+            return View();
+        }
+        [HttpPost]
+        public void GetRoleId(string RoleName)
+        {
+            Session["RoleName"] = RoleName;
+        }
         [HttpPost]
         public async Task<ActionResult> Register(RegisterViewModel model )
         {
@@ -150,27 +173,35 @@ namespace GradProjectV5.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.Email , Email = model.Email , PhoneNumber = model.Password};
-              var result =   await UserManager.CreateAsync(user, model.Password);
-                 if (result.Succeeded)
-                 {
-                     await SignInManager.SignInAsync(user, false, false);
-                     if (Session["Mid"] != null)
-                     {
-                         int id = Convert.ToInt32(Session["Mid"].ToString());
-                         Session.Remove("Mid");
-                         var member = db.Members.Find(id);
-                         member.UserId = user.Id;
-                         db.Entry(member).State = EntityState.Modified;
-                         db.SaveChanges();
-                     }
-                     return RedirectToAction("index", "Home");
+                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, PhoneNumber = model.Password };
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    if (Session["RoleName"] != null)
+                    {
+                        string RoleName = Session["RoleName"].ToString();
+                       await UserManager.AddToRoleAsync(user.Id, RoleName);
+                        Session.Remove("RoleName");
 
-                 }
+                    }
+                    await SignInManager.SignInAsync(user, false, false);
 
-                 foreach (var error in result.Errors)
-                 {
-                  ModelState.AddModelError("",error);
+                    if (Session["Mid"] != null)
+                    {
+                        int id = Convert.ToInt32(Session["Mid"].ToString());
+                        Session.Remove("Mid");
+                        var member = db.Members.Find(id);
+                        member.UserId = user.Id;
+                        db.Entry(member).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    return RedirectToAction("index", "Home");
+
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error);
 
                 }
             }
@@ -183,7 +214,7 @@ namespace GradProjectV5.Controllers
 
         }
 
-        
+
 
         //
         // GET: /Account/ConfirmEmail
@@ -295,7 +326,7 @@ namespace GradProjectV5.Controllers
             return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }
 
-        //
+        //regi
         // GET: /Account/SendCode
         [AllowAnonymous]
         public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
