@@ -20,7 +20,7 @@ namespace GradProjectV5.Models
             this.Beneficiers = new HashSet<Beneficier>();
             this.Doctors = new HashSet<Doctor>();
             this.Donators = new HashSet<Donator>();
-            this.Workers = new HashSet<Worker>();
+            this.Pharamacies = new HashSet<Pharamacy>();
         }
     
         public int ID { get; set; }
@@ -44,6 +44,6 @@ namespace GradProjectV5.Models
         public virtual ICollection<Donator> Donators { get; set; }
         public virtual Gender Gender { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Worker> Workers { get; set; }
+        public virtual ICollection<Pharamacy> Pharamacies { get; set; }
     }
 }

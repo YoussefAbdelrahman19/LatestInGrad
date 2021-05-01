@@ -168,11 +168,7 @@ namespace GradProjectV5.Controllers
 
         #endregion
         //for Pharmacy View
-        public ActionResult Pharamacy()
-        {
-
-            return View();
-        }
+   
         public ActionResult GetPharamacyData()
         {
 

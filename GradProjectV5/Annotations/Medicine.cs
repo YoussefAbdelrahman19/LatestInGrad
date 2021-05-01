@@ -19,11 +19,7 @@ namespace GradProjectV5.Models
 
 
 
-        [Required(ErrorMessage = "يتطلب ادخال هذا الحقل")]
-
-        [Display(Name = "كمية الدواء")]
-        public string MedicineAmount { get; set; }
-
+       
 
         [Required(ErrorMessage = "يتطلب ادخال هذا الحقل")]
         [Display(Name="وصف الدواء ")]

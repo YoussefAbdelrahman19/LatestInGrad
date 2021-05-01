@@ -169,7 +169,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\list.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MedicineController.cs" />
     <Compile Include="Controllers\MEMBERController.cs" />
+    <Compile Include="Controllers\PharmacyController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -248,9 +250,6 @@
     <Compile Include="Models\PharmacyMedicineRequest.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PharmacyWorker.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\PhMedicineRequestStatu.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -258,9 +257,6 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Worker.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -274,6 +270,7 @@
     <Content Include="Content\all.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\datatables.min.css" />
     <Content Include="Content\dropzone.css" />
     <Content Include="Content\Images\DocotorHomeScreen.png" />
     <Content Include="Content\Images\doctors-banner.svg" />
@@ -309,6 +306,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\datatables.min.js" />
     <Content Include="Scripts\dropzone.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -361,10 +359,13 @@
     <Content Include="Views\Home\AskDoctor.cshtml" />
     <Content Include="Views\Home\AskDoctorData.cshtml" />
     <Content Include="Upload.ashx" />
-    <Content Include="Views\Home\Pharamacy.cshtml" />
     <Content Include="Views\Home\GetPharamacyData.cshtml" />
     <Content Include="Views\Shared\_LayoutPharmacy.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Pharmacy\Index.cshtml" />
+    <Content Include="Views\Pharmacy\Create.cshtml" />
+    <Content Include="Views\Pharmacy\RequestMedicine.cshtml" />
+    <Content Include="Views\Medicine\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

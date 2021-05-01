@@ -154,10 +154,11 @@ namespace GradProjectV5.Controllers
 
         }
         [AllowAnonymous]
+        [HttpGet]
         public dynamic Register()
         {
-           // if (Session["Mid"] == null) 
-              //  return RedirectToAction("Create", "MEMBER");
+            if (Session["Mid"] == null)
+                return RedirectToAction("Create", "MEMBER");
             return View();
         }
         [HttpPost]

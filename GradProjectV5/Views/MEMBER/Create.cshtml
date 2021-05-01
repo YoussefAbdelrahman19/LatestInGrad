@@ -112,12 +112,12 @@
 
 
                 <div class="form-group">
-                    <div class=" col-sm-4">
+                    <div class=" col-md-4">
                     </div>
-                    <div class=" col-sm-4">
+                    <div class=" col-md-4">
                         <input type="button" onclick="AddMember();" value="التالي" class="btn btn-primary" />
                     </div>
-                    <div class=" col-sm-4">
+                    <div class=" col-md-4">
                     </div>
                 </div>
             </div>
@@ -348,19 +348,6 @@
 
 
 
-            function CreateAjaxRequest(url, requesttype, form_data) {
-                var resultData = null;
-                $.ajax({
-                    url: url,
-                    type: requesttype,
-                    async: false,
-                    datatype: 'JSON',
-                    contentType: "application/json",
-                    data: JSON.stringify(form_data),
-                    success: function (result) { resultData = result }
-                });
-                return resultData;
-            }
 
 
     </script>

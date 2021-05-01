@@ -21,11 +21,11 @@ namespace GradProjectV5
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js", "~/Scripts/bootstrap.bundle.js",
-                      "~/Scripts/respond.js", "~/Scripts/Site.js", "~/Scripts/dropzone.min.js"));
+                      "~/Scripts/respond.js", "~/Scripts/Site.js", "~/Scripts/dropzone.min.js" , "~/Scripts/datatables.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css", "~/Content/dropzone.css"));
+                      "~/Content/site.css", "~/Content/dropzone.css","~/Content/datatables.min.css"));
         }
     }
 }

@@ -171,7 +171,6 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MedicineName" Type="nvarchar(max)" />
-          <Property Name="MedicineAmount" Type="nvarchar(max)" />
           <Property Name="MedicineDescription" Type="nvarchar(max)" />
           <Property Name="ExpireDate" Type="datetime" />
           <Property Name="IsDeleted" Type="bit" />
@@ -197,6 +196,9 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PharmacyName" Type="nvarchar(max)" />
+          <Property Name="PharmacyAddress" Type="nvarchar(max)" />
+          <Property Name="PharmacyPhone" Type="nvarchar(max)" />
+          <Property Name="PharmacyOwnerId" Type="int" />
           <Property Name="IsDeleted" Type="bit" />
         </EntityType>
         <EntityType Name="PharmacyMedicineRequest">
@@ -208,20 +210,10 @@
           <Property Name="RequestPharamcyId" Type="int" />
           <Property Name="Amount" Type="nvarchar(max)" />
           <Property Name="RequestDate" Type="datetime" />
-          <Property Name="RequestStatusId" Type="int" />
           <Property Name="RespondPharamacyId" Type="int" />
           <Property Name="RespondDate" Type="datetime" />
           <Property Name="IsDeleted" Type="bit" />
-          <Property Name="LatestStatusId" Type="int" />
-        </EntityType>
-        <EntityType Name="PharmacyWorkers">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PharmacyId" Type="int" />
-          <Property Name="WorkerId" Type="int" />
-          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="LatestRequestStatusId" Type="int" />
         </EntityType>
         <EntityType Name="PhMedicineRequestStatus">
           <Key>
@@ -229,8 +221,8 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StatusId" Type="int" />
-          <Property Name="PhMedicineRequestStatusId" Type="int" />
-          <Property Name="Date" Type="datetime" />
+          <Property Name="PhMedicineRequestId" Type="int" />
+          <Property Name="StatusDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -249,14 +241,6 @@
           <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
-        <EntityType Name="Worker">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MemberId" Type="int" />
-          <Property Name="IsDeleted" Type="bit" />
         </EntityType>
         <Association Name="FK_Beneficier_Member">
           <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
@@ -506,6 +490,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Pharamacy_Member">
+          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
+          <End Role="Pharamacy" Type="Self.Pharamacy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Pharamacy">
+              <PropertyRef Name="PharmacyOwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PharmacyMedicineRequest_Status">
           <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
           <End Role="PharmacyMedicineRequest" Type="Self.PharmacyMedicineRequest" Multiplicity="*" />
@@ -514,31 +510,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="PharmacyMedicineRequest">
-              <PropertyRef Name="LatestStatusId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PharmacyWorkers_Pharamacy">
-          <End Role="Pharamacy" Type="Self.Pharamacy" Multiplicity="0..1" />
-          <End Role="PharmacyWorkers" Type="Self.PharmacyWorkers" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Pharamacy">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PharmacyWorkers">
-              <PropertyRef Name="PharmacyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PharmacyWorkers_Worker">
-          <End Role="Worker" Type="Self.Worker" Multiplicity="0..1" />
-          <End Role="PharmacyWorkers" Type="Self.PharmacyWorkers" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Worker">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PharmacyWorkers">
-              <PropertyRef Name="WorkerId" />
+              <PropertyRef Name="LatestRequestStatusId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -550,7 +522,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="PhMedicineRequestStatus">
-              <PropertyRef Name="PhMedicineRequestStatusId" />
+              <PropertyRef Name="PhMedicineRequestId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -602,18 +574,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Worker_Member">
-          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
-          <End Role="Worker" Type="Self.Worker" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Member">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Worker">
-              <PropertyRef Name="MemberId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="MyProjectDBModelStoreContainer">
           <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -635,11 +595,9 @@
           <EntitySet Name="Member" EntityType="Self.Member" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pharamacy" EntityType="Self.Pharamacy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PharmacyMedicineRequest" EntityType="Self.PharmacyMedicineRequest" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PharmacyWorkers" EntityType="Self.PharmacyWorkers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhMedicineRequestStatus" EntityType="Self.PhMedicineRequestStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Worker" EntityType="Self.Worker" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Beneficier_Member" Association="Self.FK_Beneficier_Member">
             <End Role="Member" EntitySet="Member" />
             <End Role="Beneficier" EntitySet="Beneficier" />
@@ -720,17 +678,13 @@
             <End Role="Gender" EntitySet="Gender" />
             <End Role="Member" EntitySet="Member" />
           </AssociationSet>
+          <AssociationSet Name="FK_Pharamacy_Member" Association="Self.FK_Pharamacy_Member">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Pharamacy" EntitySet="Pharamacy" />
+          </AssociationSet>
           <AssociationSet Name="FK_PharmacyMedicineRequest_Status" Association="Self.FK_PharmacyMedicineRequest_Status">
             <End Role="Status" EntitySet="Status" />
             <End Role="PharmacyMedicineRequest" EntitySet="PharmacyMedicineRequest" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PharmacyWorkers_Pharamacy" Association="Self.FK_PharmacyWorkers_Pharamacy">
-            <End Role="Pharamacy" EntitySet="Pharamacy" />
-            <End Role="PharmacyWorkers" EntitySet="PharmacyWorkers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PharmacyWorkers_Worker" Association="Self.FK_PharmacyWorkers_Worker">
-            <End Role="Worker" EntitySet="Worker" />
-            <End Role="PharmacyWorkers" EntitySet="PharmacyWorkers" />
           </AssociationSet>
           <AssociationSet Name="FK_PhMedicineRequestStatus_PhMedicineRequestStatus" Association="Self.FK_PhMedicineRequestStatus_PhMedicineRequestStatus">
             <End Role="PharmacyMedicineRequest" EntitySet="PharmacyMedicineRequest" />
@@ -751,10 +705,6 @@
           <AssociationSet Name="FK_RequestMedicine_Pharamacy1" Association="Self.FK_RequestMedicine_Pharamacy1">
             <End Role="Pharamacy" EntitySet="Pharamacy" />
             <End Role="PharmacyMedicineRequest" EntitySet="PharmacyMedicineRequest" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Worker_Member" Association="Self.FK_Worker_Member">
-            <End Role="Member" EntitySet="Member" />
-            <End Role="Worker" EntitySet="Worker" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -781,11 +731,9 @@
           <EntitySet Name="Members" EntityType="MyProjectDBModel.Member" />
           <EntitySet Name="Pharamacies" EntityType="MyProjectDBModel.Pharamacy" />
           <EntitySet Name="PharmacyMedicineRequests" EntityType="MyProjectDBModel.PharmacyMedicineRequest" />
-          <EntitySet Name="PharmacyWorkers" EntityType="MyProjectDBModel.PharmacyWorker" />
           <EntitySet Name="PhMedicineRequestStatus" EntityType="MyProjectDBModel.PhMedicineRequestStatu" />
           <EntitySet Name="Status" EntityType="MyProjectDBModel.Status" />
           <EntitySet Name="sysdiagrams" EntityType="MyProjectDBModel.sysdiagram" />
-          <EntitySet Name="Workers" EntityType="MyProjectDBModel.Worker" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="MyProjectDBModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
@@ -862,13 +810,9 @@
             <End Role="Medicine" EntitySet="Medicines" />
             <End Role="PharmacyMedicineRequest" EntitySet="PharmacyMedicineRequests" />
           </AssociationSet>
-          <AssociationSet Name="FK_Worker_Member" Association="MyProjectDBModel.FK_Worker_Member">
+          <AssociationSet Name="FK_Pharamacy_Member" Association="MyProjectDBModel.FK_Pharamacy_Member">
             <End Role="Member" EntitySet="Members" />
-            <End Role="Worker" EntitySet="Workers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PharmacyWorkers_Pharamacy" Association="MyProjectDBModel.FK_PharmacyWorkers_Pharamacy">
             <End Role="Pharamacy" EntitySet="Pharamacies" />
-            <End Role="PharmacyWorker" EntitySet="PharmacyWorkers" />
           </AssociationSet>
           <AssociationSet Name="FK_RequestMedicine_Pharamacy" Association="MyProjectDBModel.FK_RequestMedicine_Pharamacy">
             <End Role="Pharamacy" EntitySet="Pharamacies" />
@@ -885,10 +829,6 @@
           <AssociationSet Name="FK_PhMedicineRequestStatus_PhMedicineRequestStatus" Association="MyProjectDBModel.FK_PhMedicineRequestStatus_PhMedicineRequestStatus">
             <End Role="PharmacyMedicineRequest" EntitySet="PharmacyMedicineRequests" />
             <End Role="PhMedicineRequestStatu" EntitySet="PhMedicineRequestStatus" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PharmacyWorkers_Worker" Association="MyProjectDBModel.FK_PharmacyWorkers_Worker">
-            <End Role="Worker" EntitySet="Workers" />
-            <End Role="PharmacyWorker" EntitySet="PharmacyWorkers" />
           </AssociationSet>
           <AssociationSet Name="FK_PhMedicineRequestStatus_Status" Association="MyProjectDBModel.FK_PhMedicineRequestStatus_Status">
             <End Role="Status" EntitySet="Status" />
@@ -1085,7 +1025,6 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MedicineName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MedicineAmount" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MedicineDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ExpireDate" Type="DateTime" Precision="3" />
           <Property Name="IsDeleted" Type="Boolean" />
@@ -1112,7 +1051,7 @@
           <NavigationProperty Name="Doctors" Relationship="MyProjectDBModel.FK_Doctor_Member" FromRole="Member" ToRole="Doctor" />
           <NavigationProperty Name="Donators" Relationship="MyProjectDBModel.FK_Donator_Member" FromRole="Member" ToRole="Donator" />
           <NavigationProperty Name="Gender" Relationship="MyProjectDBModel.FK_Member_Gender" FromRole="Member" ToRole="Gender" />
-          <NavigationProperty Name="Workers" Relationship="MyProjectDBModel.FK_Worker_Member" FromRole="Member" ToRole="Worker" />
+          <NavigationProperty Name="Pharamacies" Relationship="MyProjectDBModel.FK_Pharamacy_Member" FromRole="Member" ToRole="Pharamacy" />
         </EntityType>
         <EntityType Name="Pharamacy">
           <Key>
@@ -1120,8 +1059,11 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PharmacyName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PharmacyAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PharmacyPhone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PharmacyOwnerId" Type="Int32" />
           <Property Name="IsDeleted" Type="Boolean" />
-          <NavigationProperty Name="PharmacyWorkers" Relationship="MyProjectDBModel.FK_PharmacyWorkers_Pharamacy" FromRole="Pharamacy" ToRole="PharmacyWorker" />
+          <NavigationProperty Name="Member" Relationship="MyProjectDBModel.FK_Pharamacy_Member" FromRole="Pharamacy" ToRole="Member" />
           <NavigationProperty Name="PharmacyMedicineRequests" Relationship="MyProjectDBModel.FK_RequestMedicine_Pharamacy" FromRole="Pharamacy" ToRole="PharmacyMedicineRequest" />
           <NavigationProperty Name="PharmacyMedicineRequests1" Relationship="MyProjectDBModel.FK_RequestMedicine_Pharamacy1" FromRole="Pharamacy" ToRole="PharmacyMedicineRequest" />
         </EntityType>
@@ -1134,27 +1076,15 @@
           <Property Name="RequestPharamcyId" Type="Int32" />
           <Property Name="Amount" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="RequestDate" Type="DateTime" Precision="3" />
-          <Property Name="RequestStatusId" Type="Int32" />
           <Property Name="RespondPharamacyId" Type="Int32" />
           <Property Name="RespondDate" Type="DateTime" Precision="3" />
           <Property Name="IsDeleted" Type="Boolean" />
-          <Property Name="LatestStatusId" Type="Int32" />
+          <Property Name="LatestRequestStatusId" Type="Int32" />
           <NavigationProperty Name="Medicine" Relationship="MyProjectDBModel.FK_RequestMedicine_Medicine" FromRole="PharmacyMedicineRequest" ToRole="Medicine" />
           <NavigationProperty Name="Pharamacy" Relationship="MyProjectDBModel.FK_RequestMedicine_Pharamacy" FromRole="PharmacyMedicineRequest" ToRole="Pharamacy" />
           <NavigationProperty Name="Pharamacy1" Relationship="MyProjectDBModel.FK_RequestMedicine_Pharamacy1" FromRole="PharmacyMedicineRequest" ToRole="Pharamacy" />
           <NavigationProperty Name="Status" Relationship="MyProjectDBModel.FK_PharmacyMedicineRequest_Status" FromRole="PharmacyMedicineRequest" ToRole="Status" />
           <NavigationProperty Name="PhMedicineRequestStatus" Relationship="MyProjectDBModel.FK_PhMedicineRequestStatus_PhMedicineRequestStatus" FromRole="PharmacyMedicineRequest" ToRole="PhMedicineRequestStatu" />
-        </EntityType>
-        <EntityType Name="PharmacyWorker">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PharmacyId" Type="Int32" />
-          <Property Name="WorkerId" Type="Int32" />
-          <Property Name="IsDeleted" Type="Boolean" />
-          <NavigationProperty Name="Pharamacy" Relationship="MyProjectDBModel.FK_PharmacyWorkers_Pharamacy" FromRole="PharmacyWorker" ToRole="Pharamacy" />
-          <NavigationProperty Name="Worker" Relationship="MyProjectDBModel.FK_PharmacyWorkers_Worker" FromRole="PharmacyWorker" ToRole="Worker" />
         </EntityType>
         <EntityType Name="PhMedicineRequestStatu">
           <Key>
@@ -1162,8 +1092,8 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StatusId" Type="Int32" />
-          <Property Name="PhMedicineRequestStatusId" Type="Int32" />
-          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="PhMedicineRequestId" Type="Int32" />
+          <Property Name="StatusDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="PharmacyMedicineRequest" Relationship="MyProjectDBModel.FK_PhMedicineRequestStatus_PhMedicineRequestStatus" FromRole="PhMedicineRequestStatu" ToRole="PharmacyMedicineRequest" />
           <NavigationProperty Name="Status" Relationship="MyProjectDBModel.FK_PhMedicineRequestStatus_Status" FromRole="PhMedicineRequestStatu" ToRole="Status" />
         </EntityType>
@@ -1189,16 +1119,6 @@
           <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="Worker">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MemberId" Type="Int32" />
-          <Property Name="IsDeleted" Type="Boolean" />
-          <NavigationProperty Name="Member" Relationship="MyProjectDBModel.FK_Worker_Member" FromRole="Worker" ToRole="Member" />
-          <NavigationProperty Name="PharmacyWorkers" Relationship="MyProjectDBModel.FK_PharmacyWorkers_Worker" FromRole="Worker" ToRole="PharmacyWorker" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="MyProjectDBModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
@@ -1432,27 +1352,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Worker_Member">
+        <Association Name="FK_Pharamacy_Member">
           <End Type="MyProjectDBModel.Member" Role="Member" Multiplicity="0..1" />
-          <End Type="MyProjectDBModel.Worker" Role="Worker" Multiplicity="*" />
+          <End Type="MyProjectDBModel.Pharamacy" Role="Pharamacy" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Member">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Worker">
-              <PropertyRef Name="MemberId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PharmacyWorkers_Pharamacy">
-          <End Type="MyProjectDBModel.Pharamacy" Role="Pharamacy" Multiplicity="0..1" />
-          <End Type="MyProjectDBModel.PharmacyWorker" Role="PharmacyWorker" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Pharamacy">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PharmacyWorker">
-              <PropertyRef Name="PharmacyId" />
+            <Dependent Role="Pharamacy">
+              <PropertyRef Name="PharmacyOwnerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1488,7 +1396,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="PharmacyMedicineRequest">
-              <PropertyRef Name="LatestStatusId" />
+              <PropertyRef Name="LatestRequestStatusId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1500,19 +1408,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="PhMedicineRequestStatu">
-              <PropertyRef Name="PhMedicineRequestStatusId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PharmacyWorkers_Worker">
-          <End Type="MyProjectDBModel.Worker" Role="Worker" Multiplicity="0..1" />
-          <End Type="MyProjectDBModel.PharmacyWorker" Role="PharmacyWorker" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Worker">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="PharmacyWorker">
-              <PropertyRef Name="WorkerId" />
+              <PropertyRef Name="PhMedicineRequestId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1708,7 +1604,6 @@
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
                 <ScalarProperty Name="MedicineDescription" ColumnName="MedicineDescription" />
-                <ScalarProperty Name="MedicineAmount" ColumnName="MedicineAmount" />
                 <ScalarProperty Name="MedicineName" ColumnName="MedicineName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
@@ -1734,6 +1629,9 @@
             <EntityTypeMapping TypeName="MyProjectDBModel.Pharamacy">
               <MappingFragment StoreEntitySet="Pharamacy">
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="PharmacyOwnerId" ColumnName="PharmacyOwnerId" />
+                <ScalarProperty Name="PharmacyPhone" ColumnName="PharmacyPhone" />
+                <ScalarProperty Name="PharmacyAddress" ColumnName="PharmacyAddress" />
                 <ScalarProperty Name="PharmacyName" ColumnName="PharmacyName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
@@ -1742,11 +1640,10 @@
           <EntitySetMapping Name="PharmacyMedicineRequests">
             <EntityTypeMapping TypeName="MyProjectDBModel.PharmacyMedicineRequest">
               <MappingFragment StoreEntitySet="PharmacyMedicineRequest">
-                <ScalarProperty Name="LatestStatusId" ColumnName="LatestStatusId" />
+                <ScalarProperty Name="LatestRequestStatusId" ColumnName="LatestRequestStatusId" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="RespondDate" ColumnName="RespondDate" />
                 <ScalarProperty Name="RespondPharamacyId" ColumnName="RespondPharamacyId" />
-                <ScalarProperty Name="RequestStatusId" ColumnName="RequestStatusId" />
                 <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="RequestPharamcyId" ColumnName="RequestPharamcyId" />
@@ -1755,21 +1652,11 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PharmacyWorkers">
-            <EntityTypeMapping TypeName="MyProjectDBModel.PharmacyWorker">
-              <MappingFragment StoreEntitySet="PharmacyWorkers">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="WorkerId" ColumnName="WorkerId" />
-                <ScalarProperty Name="PharmacyId" ColumnName="PharmacyId" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PhMedicineRequestStatus">
             <EntityTypeMapping TypeName="MyProjectDBModel.PhMedicineRequestStatu">
               <MappingFragment StoreEntitySet="PhMedicineRequestStatus">
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="PhMedicineRequestStatusId" ColumnName="PhMedicineRequestStatusId" />
+                <ScalarProperty Name="StatusDate" ColumnName="StatusDate" />
+                <ScalarProperty Name="PhMedicineRequestId" ColumnName="PhMedicineRequestId" />
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
@@ -1792,15 +1679,6 @@
                 <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Workers">
-            <EntityTypeMapping TypeName="MyProjectDBModel.Worker">
-              <MappingFragment StoreEntitySet="Worker">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

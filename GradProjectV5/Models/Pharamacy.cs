@@ -17,17 +17,18 @@ namespace GradProjectV5.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Pharamacy()
         {
-            this.PharmacyWorkers = new HashSet<PharmacyWorker>();
             this.PharmacyMedicineRequests = new HashSet<PharmacyMedicineRequest>();
             this.PharmacyMedicineRequests1 = new HashSet<PharmacyMedicineRequest>();
         }
     
         public int ID { get; set; }
         public string PharmacyName { get; set; }
+        public string PharmacyAddress { get; set; }
+        public string PharmacyPhone { get; set; }
+        public Nullable<int> PharmacyOwnerId { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PharmacyWorker> PharmacyWorkers { get; set; }
+        public virtual Member Member { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PharmacyMedicineRequest> PharmacyMedicineRequests { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

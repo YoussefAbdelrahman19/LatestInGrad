@@ -16,8 +16,8 @@ namespace GradProjectV5.Models
     {
         public int ID { get; set; }
         public Nullable<int> StatusId { get; set; }
-        public Nullable<int> PhMedicineRequestStatusId { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
+        public Nullable<int> PhMedicineRequestId { get; set; }
+        public Nullable<System.DateTime> StatusDate { get; set; }
     
         public virtual PharmacyMedicineRequest PharmacyMedicineRequest { get; set; }
         public virtual Status Status { get; set; }

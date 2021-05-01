@@ -166,7 +166,6 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="MedicineName" Type="nvarchar(max)" />
-    <Property Name="MedicineAmount" Type="nvarchar(max)" />
     <Property Name="MedicineDescription" Type="nvarchar(max)" />
     <Property Name="ExpireDate" Type="datetime" />
     <Property Name="IsDeleted" Type="bit" />
@@ -192,6 +191,9 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="PharmacyName" Type="nvarchar(max)" />
+    <Property Name="PharmacyAddress" Type="nvarchar(max)" />
+    <Property Name="PharmacyPhone" Type="nvarchar(max)" />
+    <Property Name="PharmacyOwnerId" Type="int" />
     <Property Name="IsDeleted" Type="bit" />
   </EntityType>
   <EntityType Name="PharmacyMedicineRequest">
@@ -203,20 +205,10 @@
     <Property Name="RequestPharamcyId" Type="int" />
     <Property Name="Amount" Type="nvarchar(max)" />
     <Property Name="RequestDate" Type="datetime" />
-    <Property Name="RequestStatusId" Type="int" />
     <Property Name="RespondPharamacyId" Type="int" />
     <Property Name="RespondDate" Type="datetime" />
     <Property Name="IsDeleted" Type="bit" />
-    <Property Name="LatestStatusId" Type="int" />
-  </EntityType>
-  <EntityType Name="PharmacyWorkers">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="PharmacyId" Type="int" />
-    <Property Name="WorkerId" Type="int" />
-    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="LatestRequestStatusId" Type="int" />
   </EntityType>
   <EntityType Name="PhMedicineRequestStatus">
     <Key>
@@ -224,8 +216,8 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="StatusId" Type="int" />
-    <Property Name="PhMedicineRequestStatusId" Type="int" />
-    <Property Name="Date" Type="datetime" />
+    <Property Name="PhMedicineRequestId" Type="int" />
+    <Property Name="StatusDate" Type="datetime" />
   </EntityType>
   <EntityType Name="Status">
     <Key>
@@ -244,14 +236,6 @@
     <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="version" Type="int" />
     <Property Name="definition" Type="varbinary(max)" />
-  </EntityType>
-  <EntityType Name="Worker">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="MemberId" Type="int" />
-    <Property Name="IsDeleted" Type="bit" />
   </EntityType>
   <Association Name="FK_Beneficier_Member">
     <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
@@ -501,6 +485,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Pharamacy_Member">
+    <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
+    <End Role="Pharamacy" Type="Self.Pharamacy" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Pharamacy">
+        <PropertyRef Name="PharmacyOwnerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_PharmacyMedicineRequest_Status">
     <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
     <End Role="PharmacyMedicineRequest" Type="Self.PharmacyMedicineRequest" Multiplicity="*" />
@@ -509,31 +505,7 @@
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="PharmacyMedicineRequest">
-        <PropertyRef Name="LatestStatusId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PharmacyWorkers_Pharamacy">
-    <End Role="Pharamacy" Type="Self.Pharamacy" Multiplicity="0..1" />
-    <End Role="PharmacyWorkers" Type="Self.PharmacyWorkers" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Pharamacy">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="PharmacyWorkers">
-        <PropertyRef Name="PharmacyId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_PharmacyWorkers_Worker">
-    <End Role="Worker" Type="Self.Worker" Multiplicity="0..1" />
-    <End Role="PharmacyWorkers" Type="Self.PharmacyWorkers" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Worker">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="PharmacyWorkers">
-        <PropertyRef Name="WorkerId" />
+        <PropertyRef Name="LatestRequestStatusId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -545,7 +517,7 @@
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="PhMedicineRequestStatus">
-        <PropertyRef Name="PhMedicineRequestStatusId" />
+        <PropertyRef Name="PhMedicineRequestId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -597,18 +569,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Worker_Member">
-    <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
-    <End Role="Worker" Type="Self.Worker" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Member">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Worker">
-        <PropertyRef Name="MemberId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityContainer Name="MyProjectDBModelStoreContainer">
     <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
@@ -630,11 +590,9 @@
     <EntitySet Name="Member" EntityType="Self.Member" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Pharamacy" EntityType="Self.Pharamacy" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PharmacyMedicineRequest" EntityType="Self.PharmacyMedicineRequest" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="PharmacyWorkers" EntityType="Self.PharmacyWorkers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PhMedicineRequestStatus" EntityType="Self.PhMedicineRequestStatus" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Worker" EntityType="Self.Worker" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_Beneficier_Member" Association="Self.FK_Beneficier_Member">
       <End Role="Member" EntitySet="Member" />
       <End Role="Beneficier" EntitySet="Beneficier" />
@@ -715,17 +673,13 @@
       <End Role="Gender" EntitySet="Gender" />
       <End Role="Member" EntitySet="Member" />
     </AssociationSet>
+    <AssociationSet Name="FK_Pharamacy_Member" Association="Self.FK_Pharamacy_Member">
+      <End Role="Member" EntitySet="Member" />
+      <End Role="Pharamacy" EntitySet="Pharamacy" />
+    </AssociationSet>
     <AssociationSet Name="FK_PharmacyMedicineRequest_Status" Association="Self.FK_PharmacyMedicineRequest_Status">
       <End Role="Status" EntitySet="Status" />
       <End Role="PharmacyMedicineRequest" EntitySet="PharmacyMedicineRequest" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PharmacyWorkers_Pharamacy" Association="Self.FK_PharmacyWorkers_Pharamacy">
-      <End Role="Pharamacy" EntitySet="Pharamacy" />
-      <End Role="PharmacyWorkers" EntitySet="PharmacyWorkers" />
-    </AssociationSet>
-    <AssociationSet Name="FK_PharmacyWorkers_Worker" Association="Self.FK_PharmacyWorkers_Worker">
-      <End Role="Worker" EntitySet="Worker" />
-      <End Role="PharmacyWorkers" EntitySet="PharmacyWorkers" />
     </AssociationSet>
     <AssociationSet Name="FK_PhMedicineRequestStatus_PhMedicineRequestStatus" Association="Self.FK_PhMedicineRequestStatus_PhMedicineRequestStatus">
       <End Role="PharmacyMedicineRequest" EntitySet="PharmacyMedicineRequest" />
@@ -746,10 +700,6 @@
     <AssociationSet Name="FK_RequestMedicine_Pharamacy1" Association="Self.FK_RequestMedicine_Pharamacy1">
       <End Role="Pharamacy" EntitySet="Pharamacy" />
       <End Role="PharmacyMedicineRequest" EntitySet="PharmacyMedicineRequest" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Worker_Member" Association="Self.FK_Worker_Member">
-      <End Role="Member" EntitySet="Member" />
-      <End Role="Worker" EntitySet="Worker" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

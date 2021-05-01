@@ -25,11 +25,10 @@ namespace GradProjectV5.Models
         public Nullable<int> RequestPharamcyId { get; set; }
         public string Amount { get; set; }
         public Nullable<System.DateTime> RequestDate { get; set; }
-        public Nullable<int> RequestStatusId { get; set; }
         public Nullable<int> RespondPharamacyId { get; set; }
         public Nullable<System.DateTime> RespondDate { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
-        public Nullable<int> LatestStatusId { get; set; }
+        public Nullable<int> LatestRequestStatusId { get; set; }
     
         public virtual Medicine Medicine { get; set; }
         public virtual Pharamacy Pharamacy { get; set; }

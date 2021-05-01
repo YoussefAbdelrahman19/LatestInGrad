@@ -23,7 +23,6 @@ namespace GradProjectV5.Models
     
         public int ID { get; set; }
         public string MedicineName { get; set; }
-        public string MedicineAmount { get; set; }
         public string MedicineDescription { get; set; }
         public Nullable<System.DateTime> ExpireDate { get; set; }
         public Nullable<bool> IsDeleted { get; set; }

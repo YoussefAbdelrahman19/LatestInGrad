@@ -44,10 +44,8 @@ namespace GradProjectV5.Models
         public virtual DbSet<Member> Members { get; set; }
         public virtual DbSet<Pharamacy> Pharamacies { get; set; }
         public virtual DbSet<PharmacyMedicineRequest> PharmacyMedicineRequests { get; set; }
-        public virtual DbSet<PharmacyWorker> PharmacyWorkers { get; set; }
         public virtual DbSet<PhMedicineRequestStatu> PhMedicineRequestStatus { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<Worker> Workers { get; set; }
     }
 }
