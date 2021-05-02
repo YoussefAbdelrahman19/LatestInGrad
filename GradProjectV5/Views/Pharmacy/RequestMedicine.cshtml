@@ -17,10 +17,10 @@
 
     <div class="form-group">
         <div class="col-sm-2">
-            <label class="control-label ">إسم الصيدلية  </label>
+            <label class="control-label py-2">اسم الصيدلية  </label>
         </div>
-        <div class="col-sm-9">
-            <select id="RequestPharamcyId" name="RequestPharamcyId" class="form-control"></select>
+        <div class="col-sm-10">
+            <select id="RequestPharamcyId" name="RequestPharamcyId" class="form-control p-2"></select>
         </div>
         <div class="col-sm-1">
             <a href="@Url.Action("Create")"><i class="fa fa-plus" style="color:blue;font-weight:bold"></i></a>
@@ -29,12 +29,11 @@
     </div>
     <div class="form-group">
         <div class="col-sm-2">
-            <label class="control-label ">إسم الدواء </label>
-
+            <label class="control-label py-2">اسم الدواء </label>
 
         </div>
-        <div class="col-sm-9">
-            <select id="MedicineId" name="MedicineId" class="form-control"></select>
+        <div class="col-sm-10">
+            <select id="MedicineId" name="MedicineId" class="form-control p-2"></select>
         </div>
         <div class="col-sm-1">
             <a href="@Url.Action("Create","Medicine" )"><i class="fa fa-plus" style="color:blue;font-weight:bold"></i></a>
@@ -46,10 +45,10 @@
 
     <div class="form-group">
         <div class="col-sm-2">
-            @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label " })
+            @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label py-2 " })
         </div>
-        <div class="col-sm-9">
-            @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
+        <div class="col-sm-10">
+            @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control p-2" } })
             @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-1"></div>
@@ -66,11 +65,14 @@
 
 
 
-    <div class="form-group">
-        <div class=" col-md-10">
-            <input type="submit" value="Create" class="btn btn-primary" />
+    <div class="form-group pt-4 w-100 text-center py-4 ">
+        <div class="col-sm-10 ">
+            <input type="submit" value="حفظ" class="btn btn-primary w-100 py-2" />
+
         </div>
     </div>
+   
+
     <br/> <br/>
     <div id="PharmacyRequestMedicineDiv"></div>
 

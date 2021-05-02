@@ -6,69 +6,77 @@
 @{
     ViewBag.Title = "اضافة مشترك جديد";
 }
-<h2 class="text-center text-info" style="margin-top:100px">الاشتراك</h2>
-<br />
+<h2 class="" >الإشتراك</h2>
+<div class="col-sm-10"><hr/></div>
+
 
 <div class="row mt-3 ">
     <div class="col-sm-12">
-        <div class="col-sm-2"></div>
-        <div class="col-sm-8">
+        <div class="col-sm-10">
             <div class="form-horizontal">
-                @Html.ValidationSummary(true)
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <br />
 
                 <div class="form-group">
-                    <div class="col-sm-2">
-                        @Html.LabelFor(model => model.FullName, new { @class = "control-label" })
+                    <div class="col-sm-10">
+                        @Html.LabelFor(model => model.FullName, new { @class = "control-label py-2" })
 
 
                     </div>
                     <div class="col-sm-10">
-                        <input class="form-control" id="FullName" name="FullName" type="text">
+                       @* <input class="form-control" id="FullName" name="FullName" type="text">*@
+                        @Html.EditorFor(x => x.FullName, new { htmlAttributes = new { id = "FullName" ,@class="col-sm-10 form-control"} })
                         @Html.ValidationMessageFor(model => model.FullName)
                     </div>
                 </div>
                 <br />
                 <div class="form-group">
                     <div class="col-sm-2">
-                        @Html.LabelFor(model => model.PhoneNo, new { @class = "control-label" })
+                        @Html.LabelFor(model => model.PhoneNo, new { @class = "control-label py-2" })
                     </div>
                     <div class="col-sm-10">
-                        <input class="form-control" id="Phone" name="Phone" type="text">
+                      @*  <input class="form-control" id="Phone" name="Phone" type="text">*@
+                        @Html.EditorFor(x => x.PhoneNo, new { htmlAttributes = new { id = "Phone", @class = "col-sm-10 form-control" } })
+
                         @Html.ValidationMessageFor(model => model.PhoneNo)
                     </div>
                 </div>
                 <br />
                 <div class="form-group">
                     <div class="col-sm-2">
-                        <label class="control-label " for="Address">العمر  </label>
-
-
+                        @Html.LabelFor(model => model.Age, new { @class = "control-label py-2" })
                     </div>
+
                     <div class="col-sm-10">
-                        <input type="number" id="txt_age"  class="form-control"/>
+                        @*<input type="number" id="txt_age"  class="form-control"/>*@
+                        @Html.EditorFor(x => x.Age, new { htmlAttributes = new { id = "txt_age", @class = "col-sm-10 form-control" } })
+
+
+
+                        
                     </div>
                 </div>
 
                 <br />
-                <div class="form-group">
-                    <div class="col-sm-2">
-                        @*<label class="control-label " for="Address">National Id  </label>*@
-                        @Html.LabelFor(model => model.NationalId, new { @class = "control-label" })
+                <div class="form-group py-2">
+                    <div class="col-sm-10">
+                        @Html.LabelFor(model => model.NationalId, new { @class = "control-label py-2" })
 
 
                     </div>
                     <div class="col-sm-10">
-                        <input class="form-control" id="NationalId" name="NationalId" type="number" min="14" max="100">
+                        @*<input class="form-control" id="NationalId" name="NationalId" type="number" min="14" max="16">*@
+                        @Html.EditorFor(x => x.NationalId, new { htmlAttributes = new { id = "NationalId", @class = "col-sm-10 form-control" } })
+
+
                         @Html.ValidationMessageFor(model => model.NationalId)
                     </div>
                 </div>
 
                 <br />
-                <div class="form-group">
-                    <div class="col-sm-2">
-                        @*  <label class="control-label " for="Address">Address  </label>*@
-                        @Html.LabelFor(model => model.Address, new { @class = "control-label" })
+                <div class="form-group py-2">
+                    <div class="col-sm-10">
+                        @Html.LabelFor(model => model.Address, new { @class = "control-label py-2" })
 
                     </div>
                     <div class="col-sm-10">
@@ -81,8 +89,8 @@
 
                 <br />
                 <div class="form-group">
-                    <div class="col-sm-2">
-                        <label class="control-label " for="Address">المحافظة  </label>
+                    <div class="col-sm-10 ">
+                        <label class="control-label py-2 " for="Address">المحافظة  </label>
 
 
                     </div>
@@ -90,9 +98,9 @@
                         <select id="ddl_Governrate" onchange="loadCity()" class="form-control"></select>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="col-sm-2">
-                        <label class="control-label " for="Address">المدينة</label>
+                <div class="form-group py-2">
+                    <div class="col-sm-10">
+                        <label class="control-label py-2 " for="Address">المدينة</label>
 
                     </div>
                     <div class="col-sm-10">
@@ -100,9 +108,9 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <div class="col-sm-2">
-                        <label class="control-label ">الجنس</label>
+                <div class="form-group py-2">
+                    <div class="col-sm-10">
+                        <label class="control-label py-2">الجنس</label>
 
                     </div>
                     <div class="col-sm-10">
@@ -111,14 +119,9 @@
                 </div>
 
 
-                <div class="form-group">
-                    <div class=" col-md-4">
-                    </div>
-                    <div class=" col-md-4">
-                        <input type="button" onclick="AddMember();" value="التالي" class="btn btn-primary" />
-                    </div>
-                    <div class=" col-md-4">
-                    </div>
+            
+                <div class="col-sm-10 py-3">
+                    <input type="submit" onclick="AddMember()" value="التالي" class="btn btn-primary w-100 py-2" />
                 </div>
             </div>
 

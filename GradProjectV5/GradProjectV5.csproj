@@ -160,6 +160,9 @@
     <Compile Include="Annotations\Complaint.cs" />
     <Compile Include="Annotations\Doctor.cs" />
     <Compile Include="Annotations\Medicine.cs" />
+    <Compile Include="Annotations\Member.cs" />
+    <Compile Include="Annotations\Pharamacy.cs" />
+    <Compile Include="Annotations\PharmacyMedicineRequest.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -359,7 +362,6 @@
     <Content Include="Views\Home\AskDoctor.cshtml" />
     <Content Include="Views\Home\AskDoctorData.cshtml" />
     <Content Include="Upload.ashx" />
-    <Content Include="Views\Home\GetPharamacyData.cshtml" />
     <Content Include="Views\Shared\_LayoutPharmacy.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Pharmacy\Index.cshtml" />
