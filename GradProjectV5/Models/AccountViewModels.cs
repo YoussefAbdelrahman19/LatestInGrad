@@ -6,7 +6,7 @@ namespace GradProjectV5.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "الإيميل")]
         public string Email { get; set; }
     }
 
@@ -42,23 +42,23 @@ namespace GradProjectV5.Models
     public class ForgotViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "البريد الإلكتروني")]
         public string Email { get; set; }
     }
 
     public class LoginViewModel
     {
-        [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
+        [Required(ErrorMessage = "يتطلب ادخال البريد الإلكتروني للمستخدم")]
+        [Display(Name = "البريد الإلكتروني")]
+        [EmailAddress(ErrorMessage = "ادخل عنوان بريد الكتروني صحيح")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "يتطلب ادخال الرقم السري")]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "الرقم السري")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = " تذكرني  ؟")]
         public bool RememberMe { get; set; }
     }
 
@@ -66,7 +66,7 @@ namespace GradProjectV5.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "البريد الإلكتروني")]
         public string Email { get; set; }
 
 
@@ -74,12 +74,12 @@ namespace GradProjectV5.Models
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "الرقم السري")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "تأكيد الرقم السري")]
+        [Compare("Password", ErrorMessage = "الرقم السري غير متطابق ")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -87,18 +87,19 @@ namespace GradProjectV5.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "البريد الإلكتروني")]
         public string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "الرقم السري")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "تأكيد الرقم السري")]
+        [Compare("Password", ErrorMessage = "الرقم السري غير متطابق ")]
+
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
@@ -108,7 +109,7 @@ namespace GradProjectV5.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "البريد الإلكتروني")]
         public string Email { get; set; }
     }
 }

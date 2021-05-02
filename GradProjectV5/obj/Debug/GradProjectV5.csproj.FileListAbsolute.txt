@@ -109,6 +109,61 @@ D:\Web Projects\Source Code\GradProjectV5\GradProjectV5\bin\Microsoft.Owin.Secur
 D:\Web Projects\Source Code\GradProjectV5\GradProjectV5\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\Web Projects\Source Code\GradProjectV5\GradProjectV5\obj\Debug\GradProjectV5.dll
 D:\Web Projects\Source Code\GradProjectV5\GradProjectV5\obj\Debug\GradProjectV5.pdb
-D:\Web Projects\Source Code\GradProjectV5\GradProjectV5\obj\Debug\GradProjectV5.csproj.CoreCompileInputs.cache
-D:\Web Projects\Source Code\GradProjectV5\GradProjectV5\obj\Debug\GradProjectV5.csproj.CopyComplete
-D:\Web Projects\Source Code\GradProjectV5\GradProjectV5\obj\Debug\GradProjectV5.csprojAssemblyReference.cache
+D:\Web Projects\Source Code\GradProjectV5\GradProjectV5\obj\Debug\GradProjectV5.csprojResolveAssemblyReference.cache
+G:\web projects\GradProjectV5\GradProjectV5\bin\GradProjectV5.dll.config
+G:\web projects\GradProjectV5\GradProjectV5\bin\GradProjectV5.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\GradProjectV5.pdb
+G:\web projects\GradProjectV5\GradProjectV5\bin\Antlr3.Runtime.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\EntityFramework.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\EntityFramework.SqlServer.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\Microsoft.AspNet.Identity.Core.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\Microsoft.AspNet.Identity.Owin.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\Microsoft.Owin.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\Microsoft.Owin.Host.SystemWeb.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\Microsoft.Owin.Security.Cookies.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\Microsoft.Owin.Security.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\Microsoft.Owin.Security.Facebook.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\Microsoft.Owin.Security.Google.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\Microsoft.Owin.Security.OAuth.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\Microsoft.Owin.Security.Twitter.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\Microsoft.Web.Infrastructure.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\Newtonsoft.Json.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\Owin.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\System.Web.Helpers.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\System.Web.Mvc.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\System.Web.Optimization.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\System.Web.Razor.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\System.Web.WebPages.Deployment.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\System.Web.WebPages.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\System.Web.WebPages.Razor.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\WebGrease.dll
+G:\web projects\GradProjectV5\GradProjectV5\bin\Newtonsoft.Json.xml
+G:\web projects\GradProjectV5\GradProjectV5\bin\System.Web.Helpers.xml
+G:\web projects\GradProjectV5\GradProjectV5\bin\System.Web.Mvc.xml
+G:\web projects\GradProjectV5\GradProjectV5\bin\System.Web.Optimization.xml
+G:\web projects\GradProjectV5\GradProjectV5\bin\System.Web.Razor.xml
+G:\web projects\GradProjectV5\GradProjectV5\bin\System.Web.WebPages.xml
+G:\web projects\GradProjectV5\GradProjectV5\bin\System.Web.WebPages.Deployment.xml
+G:\web projects\GradProjectV5\GradProjectV5\bin\System.Web.WebPages.Razor.xml
+G:\web projects\GradProjectV5\GradProjectV5\bin\Antlr3.Runtime.pdb
+G:\web projects\GradProjectV5\GradProjectV5\bin\EntityFramework.xml
+G:\web projects\GradProjectV5\GradProjectV5\bin\EntityFramework.SqlServer.xml
+G:\web projects\GradProjectV5\GradProjectV5\bin\Microsoft.AspNet.Identity.Core.xml
+G:\web projects\GradProjectV5\GradProjectV5\bin\Microsoft.AspNet.Identity.Owin.xml
+G:\web projects\GradProjectV5\GradProjectV5\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+G:\web projects\GradProjectV5\GradProjectV5\bin\Microsoft.Owin.xml
+G:\web projects\GradProjectV5\GradProjectV5\bin\Microsoft.Owin.Host.SystemWeb.xml
+G:\web projects\GradProjectV5\GradProjectV5\bin\Microsoft.Owin.Security.xml
+G:\web projects\GradProjectV5\GradProjectV5\bin\Microsoft.Owin.Security.Facebook.xml
+G:\web projects\GradProjectV5\GradProjectV5\bin\Microsoft.Owin.Security.Cookies.xml
+G:\web projects\GradProjectV5\GradProjectV5\bin\Microsoft.Owin.Security.OAuth.xml
+G:\web projects\GradProjectV5\GradProjectV5\bin\Microsoft.Owin.Security.Google.xml
+G:\web projects\GradProjectV5\GradProjectV5\bin\Microsoft.Owin.Security.Twitter.xml
+G:\web projects\GradProjectV5\GradProjectV5\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+G:\web projects\GradProjectV5\GradProjectV5\obj\Debug\GradProjectV5.csprojAssemblyReference.cache
+G:\web projects\GradProjectV5\GradProjectV5\obj\Debug\GradProjectV5.csproj.CoreCompileInputs.cache
+G:\web projects\GradProjectV5\GradProjectV5\obj\Debug\GradProjectV5.csproj.CopyComplete
+G:\web projects\GradProjectV5\GradProjectV5\obj\Debug\GradProjectV5.dll
+G:\web projects\GradProjectV5\GradProjectV5\obj\Debug\GradProjectV5.pdb
