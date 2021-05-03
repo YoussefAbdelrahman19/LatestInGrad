@@ -127,6 +127,40 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Consults">
+      <EntityTypeMapping TypeName="MyProjectDBModel.Consult">
+        <MappingFragment StoreEntitySet="Consult">
+          <ScalarProperty Name="ConsultTypeId" ColumnName="ConsultTypeId" />
+          <ScalarProperty Name="QuestionDate" ColumnName="QuestionDate" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="QuestionerId" ColumnName="QuestionerId" />
+          <ScalarProperty Name="AvailableFilePath" ColumnName="AvailableFilePath" />
+          <ScalarProperty Name="ConsultQuestionName" ColumnName="ConsultQuestionName" />
+          <ScalarProperty Name="ConsultQuestionTitle" ColumnName="ConsultQuestionTitle" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ConsultAnswers">
+      <EntityTypeMapping TypeName="MyProjectDBModel.ConsultAnswer">
+        <MappingFragment StoreEntitySet="ConsultAnswer">
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="AnswerDate" ColumnName="AnswerDate" />
+          <ScalarProperty Name="AnsweredById" ColumnName="AnsweredById" />
+          <ScalarProperty Name="Answer" ColumnName="Answer" />
+          <ScalarProperty Name="ConsultId" ColumnName="ConsultId" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ConsultTypes">
+      <EntityTypeMapping TypeName="MyProjectDBModel.ConsultType">
+        <MappingFragment StoreEntitySet="ConsultType">
+          <ScalarProperty Name="ConsultTypeName" ColumnName="ConsultTypeName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Doctors">
       <EntityTypeMapping TypeName="MyProjectDBModel.Doctor">
         <MappingFragment StoreEntitySet="Doctor">
@@ -209,10 +243,11 @@
         <MappingFragment StoreEntitySet="PharmacyMedicineRequest">
           <ScalarProperty Name="LatestRequestStatusId" ColumnName="LatestRequestStatusId" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="RespondedAmount" ColumnName="RespondedAmount" />
           <ScalarProperty Name="RespondDate" ColumnName="RespondDate" />
           <ScalarProperty Name="RespondPharamacyId" ColumnName="RespondPharamacyId" />
           <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
-          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="RequestedAmount" ColumnName="RequestedAmount" />
           <ScalarProperty Name="RequestPharamcyId" ColumnName="RequestPharamcyId" />
           <ScalarProperty Name="MedicineId" ColumnName="MedicineId" />
           <ScalarProperty Name="ID" ColumnName="ID" />

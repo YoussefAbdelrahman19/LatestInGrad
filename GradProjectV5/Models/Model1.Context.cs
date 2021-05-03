@@ -36,6 +36,9 @@ namespace GradProjectV5.Models
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Complaint> Complaints { get; set; }
         public virtual DbSet<ComplaintStatu> ComplaintStatus { get; set; }
+        public virtual DbSet<Consult> Consults { get; set; }
+        public virtual DbSet<ConsultAnswer> ConsultAnswers { get; set; }
+        public virtual DbSet<ConsultType> ConsultTypes { get; set; }
         public virtual DbSet<Doctor> Doctors { get; set; }
         public virtual DbSet<Donator> Donators { get; set; }
         public virtual DbSet<Gender> Genders { get; set; }

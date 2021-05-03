@@ -7,6 +7,18 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/all.min.css" rel="stylesheet" />
+    @*<style>
+       nav div div ul li.dropdown {
+            position: relative;
+        }
+        .navbar div li ul#ddl_phar {
+            display: none;
+        }
+        .navbar div.collapse ul li.dropdown:hover   {
+            display: block !important;
+            color: white !important;
+        }
+    </style>*@
 
 </head>
 <body class="bg-white">
@@ -27,9 +39,18 @@
                     <li class="nav-item">
                         <a class="nav-link fw-bold text-light text-nowrap" href="/Home/DontatingMedicine">التبرع بالدواء</a>
                     </li>
-                    <li class="nav-item ">
-                        <a class=" nav-link text-light fw-bold  text-nowrap" href="@Url.Action("Create","Pharmacy")">صيدليات</a>
-                      
+                   
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            صيدليات
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="ddl_phar">
+                            <li><a class="dropdown-item" href="@Url.Action("Create","Pharmacy")">إضافة صيدلية</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("AllPhMedicineRequests","Pharmacy")">التبرع بدواء</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("RequestMedicine","Pharmacy")">طلب دواء</a></li>
+                   
+                        </ul>
                     </li>
 
                    
@@ -49,7 +70,7 @@
     
     @RenderBody()
 
-    <footer class="mt-5 bg-white p-3" style="border-top: 1px solid #18a8aa">
+    <footer class="mt-5 bg-white p-3 " style="border-top: 1px solid #18a8aa">
         <div class="container-fluid">
             <div class="row">
                 <div class="col">

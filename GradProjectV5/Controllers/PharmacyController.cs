@@ -93,7 +93,7 @@ namespace GradProjectV5.Controllers
                 MyProjectDBEntities db = new MyProjectDBEntities();
                 PharmacyMedicineRequest pharmacyMedicineRequest = new PharmacyMedicineRequest();
                 pharmacyMedicineRequest.IsDeleted = false;
-                pharmacyMedicineRequest.Amount = pmr.Amount;
+                pharmacyMedicineRequest.RequestedAmount = pmr.RequestedAmount;
                 pharmacyMedicineRequest.MedicineId = pmr.MedicineId;
                 pharmacyMedicineRequest.RequestPharamcyId = pmr.RequestPharamcyId;
                 pharmacyMedicineRequest.RequestDate = DateTime.Now;
@@ -119,12 +119,13 @@ namespace GradProjectV5.Controllers
             var userid = User.Identity.GetUserId();
             var member = db.Members.FirstOrDefault(x => x.UserId ==userid );
             var tmp = db.PharmacyMedicineRequests.Where(x => x.IsDeleted == false &&
+                                                             x.LatestRequestStatusId != 3 &&
                                                              x.Pharamacy.PharmacyOwnerId == member.ID).Select(x => new
             {
                 x.ID,
                 RequestPharmacy = x.RequestPharamcyId == null ? "":x.Pharamacy.PharmacyName,
                 MedicineName = x.MedicineId == null ?"":x.Medicine.MedicineName,
-                Amount= x.Amount == null ?"":x.Amount,
+                RequestedAmount= x.RequestedAmount == null ?"":x.RequestedAmount,
                 requestday =x.RequestDate == null ?0: x.RequestDate.Value.Day,
                 requestmonth = x.RequestDate == null ?0:x.RequestDate.Value.Month,
                 requestyear = x.RequestDate == null ?0:x.RequestDate.Value.Year,
@@ -139,5 +140,79 @@ namespace GradProjectV5.Controllers
 
         }
 
+
+
+
+
+
+        [HttpGet]
+        public dynamic AllPhMedicineRequests()
+        {
+            return View();
+        }
+
+
+        [HttpGet]
+        public dynamic GetAllPhRequestedMedicine()
+        {
+            MyProjectDBEntities db = new MyProjectDBEntities();
+            var tmp = db.PharmacyMedicineRequests.Where(x => x.IsDeleted == false && 
+                                                             x.LatestRequestStatusId == 1 ).Select(x => new
+            {
+                x.ID,
+                x.Pharamacy.Member.FullName,
+                RequestPharmacy = x.RequestPharamcyId == null ? "":x.Pharamacy.PharmacyName,
+                MedicineName = x.MedicineId == null ?"":x.Medicine.MedicineName,
+                RequestedAmount= x.RequestedAmount == null ?"":x.RequestedAmount,
+                requestday =x.RequestDate == null ?0: x.RequestDate.Value.Day,
+                requestmonth = x.RequestDate == null ?0:x.RequestDate.Value.Month,
+                requestyear = x.RequestDate == null ?0:x.RequestDate.Value.Year,
+                StatusName = x.LatestRequestStatusId == null ?"":x.Status.StatusName
+            }).ToList();
+            return Json(tmp, JsonRequestBehavior.AllowGet);
+
+
+        }
+
+        [HttpPost]
+        public dynamic DonateMedicine(int requestid , int respondpharmacyid , string amount)
+        {
+            MyProjectDBEntities db = new MyProjectDBEntities();
+            var tmp = db.PharmacyMedicineRequests.Find(requestid);
+            tmp.RespondPharamacyId = respondpharmacyid;
+            tmp.RespondedAmount = amount;
+            tmp.RespondDate = DateTime.Now;
+            tmp.LatestRequestStatusId = 2;
+            db.SaveChanges();
+            PhMedicineRequestStatu phMedicineRequestStatu = new PhMedicineRequestStatu();
+            phMedicineRequestStatu.PhMedicineRequestId = requestid;
+            phMedicineRequestStatu.StatusId = 2;
+            phMedicineRequestStatu.StatusDate = DateTime.Now;
+            db.PhMedicineRequestStatus.Add(phMedicineRequestStatu);
+            db.SaveChanges();
+            return "تم تسجيل تبرعك بنجاح";
+
+
+        }
+
+        [HttpPost]
+        public dynamic CloseMedicineRequest(int requestid)
+        {
+            MyProjectDBEntities db = new MyProjectDBEntities();
+            var tmp = db.PharmacyMedicineRequests.Find(requestid);
+            tmp.LatestRequestStatusId = 3;
+            db.SaveChanges();
+            PhMedicineRequestStatu phMedicineRequestStatu = new PhMedicineRequestStatu();
+            phMedicineRequestStatu.PhMedicineRequestId = requestid;
+            phMedicineRequestStatu.StatusId = 3;
+            phMedicineRequestStatu.StatusDate = DateTime.Now;
+            db.PhMedicineRequestStatus.Add(phMedicineRequestStatu);
+            db.SaveChanges();
+            return "تم إغلاق الطلب بنجاح";
+
+
+
+        }
+        
     }
 }

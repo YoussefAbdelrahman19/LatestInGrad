@@ -1,11 +1,9 @@
-﻿@model GradProjectV5.Models.PharmacyMedicineRequest
+﻿@model GradProjectV5.Models.Consult
 
 @{
-    ViewBag.Title = "RequestMedicine";
+    ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
 
 @using (Html.BeginForm())
 {
@@ -14,67 +12,70 @@
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-
-    <div class="form-group">
+      <div class="form-group">
         <div class="col-sm-2">
-            <label class="control-label py-2">اسم الصيدلية  </label>
+            <label class="control-label py-2">نوع الإستشارة  </label>
         </div>
         <div class="col-sm-10">
-            <select id="RequestPharamcyId" name="RequestPharamcyId" class="form-control p-2"></select>
-        </div>
-        <div class="col-sm-1">
-            <a href="@Url.Action("Create")"><i class="fa fa-plus" style="color:blue;font-weight:bold"></i></a>
+            <select id="ConsultTypeId" name="ConsultTypeId" class="form-control p-2"></select>
+            @Html.ValidationMessageFor(model => model.ConsultTypeId, "", new { @class = "text-danger" })
 
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-sm-2">
-            <label class="control-label py-2">اسم الدواء </label>
-
-        </div>
-        <div class="col-sm-10">
-            <select id="MedicineId" name="MedicineId" class="form-control p-2"></select>
-        </div>
         <div class="col-sm-1">
-            <a href="@Url.Action("Create","Medicine" )"><i class="fa fa-plus" style="color:blue;font-weight:bold"></i></a>
+            <a href="@Url.Action("AddConsultType")"><i class="fa fa-plus" style="color:blue;font-weight:bold"></i></a>
 
         </div>
     </div>
 
-
-
     <div class="form-group">
         <div class="col-sm-2">
-            @Html.LabelFor(model => model.RequestedAmount, htmlAttributes: new { @class = "control-label py-2 " })
+            @Html.LabelFor(model => model.ConsultQuestionTitle, htmlAttributes: new { @class = "control-label py-2 " })
         </div>
         <div class="col-sm-10">
-            @Html.EditorFor(model => model.RequestedAmount, new { htmlAttributes = new { @class = "form-control p-2" } })
-            @Html.ValidationMessageFor(model => model.RequestedAmount, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.ConsultQuestionTitle, new { htmlAttributes = new { @class = "form-control p-2" } })
+            @Html.ValidationMessageFor(model => model.ConsultQuestionTitle, "", new { @class = "text-danger" })
         </div>
         <div class="col-sm-1"></div>
 
     </div>
+    <div class="form-group">
+        <div class="col-sm-2">
+            @Html.LabelFor(model => model.ConsultQuestionName, htmlAttributes: new { @class = "control-label py-2 " })
+        </div>
+        <div class="col-sm-10">
+            @*@Html.TextAreaFor(model => model.ConsultQuestionName, new { htmlAttributes = new { @class = "form-control p-2" } })*@
+            <textarea name="ConsultQuestionName" class="form-control"></textarea>
+            @Html.ValidationMessageFor(model => model.ConsultQuestionName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-sm-1"></div>
+
+    </div>
+    
 
 
 
 
+    <div class="form-group mt-3">
+        <div class="col-sm-2">
+            <label class="control-label p-2">
+               (إختياري) إرفاق ملف
+            </label>
+        </div>
+        <div class="col-sm-10 mt-2">
+            <div class="dropzone  dropzone-previews class1" id="myawesomedropzone"></div>
 
+        </div>
 
-
-
-
+    </div>
 
 
     <div class="form-group pt-4 w-100 text-center py-4 ">
         <div class="col-sm-10 ">
-            <input type="submit" value="حفظ" class="btn btn-primary w-100 py-2" />
+            <input type="submit" id="btnSaveds" value="حفظ" class="btn btn-primary w-100 py-2" />
 
         </div>
     </div>
-   
 
-    <br/> <br/>
-    <div id="PharmacyRequestMedicineDiv"></div>
 
 }
 
@@ -86,21 +87,62 @@
     <script>
 
         $(document).ready(function() {
-            LoadMyPharmacies();
-            LoadMedicine();
-            LoadPhMedicineRequest();
+
+
+            window.Dropzone.options.myawesomedropzone = {
+                url: '../Upload.ashx',
+                addRemoveLinks: true,
+                acceptedFiles: ".pdf",
+
+                removedfile: function (file) {
+                    RemoveThisFileName(file.name);
+
+
+                    file.previewElement.remove();
+
+
+                },
+
+                success: function (file, response) {
+                    var url = "@Url.Action("addFiles", "Consult")";
+                    CreateAjaxRequest(url,"post", { file_name: file.name, respons: response });
+                    file.previewElement.classList.add("dz-success");
+                },
+                previewsContainer: ".class1",
+                uploadMultiple: false,
+                parallelUploads: 100,
+                maxFiles: 1,
+                init: function () {
+                    var myAwesomeDropzone = this;
+                    $("#btnSaveds").click(function () {
+                        myAwesomeDropzone.removeAllFiles(true);
+                    });
+                }
+            }
+
+
+            LoadConsultTypes();
+           // LoadMedicine();
+          //  LoadPhMedicineRequest();
         });
 
 
-        function LoadMyPharmacies() {
-            $('#RequestPharamcyId option').each(function() {
+
+        function RemoveThisFileName(name) {
+            var url = "@Url.Action("Remove_This_FileName", "Consult")";
+
+             CreateAjaxRequest(url,"post", { filename: name });
+        }
+
+
+        function LoadConsultTypes() {
+            $('#ConsultTypeId option').each(function() {
                 $(this).remove();
             });
-            var url = "@Url.Action("GetMyPharmacies", "Pharmacy")";
-            var result = CreateAjaxRequest(url, "post", {});
+            var url = "@Url.Action("LoadConsultType", "Consult")";
+            var result = CreateAjaxRequest(url, "get", {});
             for (var i in result) {
-                $("#RequestPharamcyId")
-                    .append('<option value=' + result[i].ID + '>' + result[i].PharmacyName + '</option>');
+                $("#ConsultTypeId").append('<option value=' + result[i].ID + '>' + result[i].ConsultTypeName + '</option>');
             }
 
 
@@ -173,7 +215,7 @@
                     tr +=
                         '<p>يمكنك إضافة الدواء الفائض عن احتياجك عن طريق الضغط علي <a href="#" onclick="EditThisMember();return false;"><i class="fa fa-plus" style="color:blue;font-weight:bold"></i></a>';
                     tr +=
-                        '<p>يمكنك طلب الدواء الناقص لديك عن طريق الضغط علي <a href="@Url.Action("RequestMedicine") "><i class="fa fa-plus" style="color:blue;font-weight:bold"></i></a>';
+                        '<p>يمكنك طلب الدواء الناقص لديك عن طريق الضغط علي <a href="@Url.Action("") "><i class="fa fa-plus" style="color:blue;font-weight:bold"></i></a>';
                     $("#GetAllMembersDiv").append(tr);
                     $('.dataTables-example').DataTable({
                         "ordering": false
@@ -199,3 +241,14 @@
         }
     </script>
 }
+
+
+
+
+
+
+
+  
+
+
+

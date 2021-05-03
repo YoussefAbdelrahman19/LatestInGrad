@@ -18,6 +18,8 @@ namespace GradProjectV5.Models
         public Member()
         {
             this.Beneficiers = new HashSet<Beneficier>();
+            this.Consults = new HashSet<Consult>();
+            this.ConsultAnswers = new HashSet<ConsultAnswer>();
             this.Doctors = new HashSet<Doctor>();
             this.Donators = new HashSet<Donator>();
             this.Pharamacies = new HashSet<Pharamacy>();
@@ -38,6 +40,10 @@ namespace GradProjectV5.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Beneficier> Beneficiers { get; set; }
         public virtual City City { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Consult> Consults { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ConsultAnswer> ConsultAnswers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Doctor> Doctors { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

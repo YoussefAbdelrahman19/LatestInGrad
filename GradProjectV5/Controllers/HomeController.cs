@@ -25,24 +25,24 @@ namespace GradProjectV5.Controllers
         {
 
             return View();
-        }
-      [HttpPost]
-      public ActionResult DontatingMedicine(Medicine mdc)
-      {
-          if (ModelState.IsValid)
-          {
-              db.Medicines.Add(mdc);
-              db.SaveChanges();
-              return View("DontatingMedicine");
-          }
-          else
-          {
-              return View(mdc);
-          }
-
-          return View("DontatingMedicine");
-
       }
+      //[HttpPost]
+      //public ActionResult DontatingMedicine(Medicine mdc)
+      //{
+      //    if (ModelState.IsValid)
+      //    {
+      //        db.Medicines.Add(mdc);
+      //        db.SaveChanges();
+      //        return View("DontatingMedicine");
+      //    }
+      //    else
+      //    {
+      //        return View(mdc);
+      //    }
+
+      //    return View("DontatingMedicine");
+
+      //}
       [HttpGet]
       public ActionResult AskDoctor()
       {

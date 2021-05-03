@@ -126,6 +126,37 @@
     <Property Name="Date" Type="datetime" />
     <Property Name="IsDeleted" Type="bit" />
   </EntityType>
+  <EntityType Name="Consult">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ConsultQuestionTitle" Type="nvarchar(max)" />
+    <Property Name="ConsultQuestionName" Type="nvarchar(max)" />
+    <Property Name="AvailableFilePath" Type="nvarchar(max)" />
+    <Property Name="QuestionerId" Type="int" />
+    <Property Name="IsDeleted" Type="bit" />
+    <Property Name="QuestionDate" Type="datetime" />
+    <Property Name="ConsultTypeId" Type="int" />
+  </EntityType>
+  <EntityType Name="ConsultAnswer">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ConsultId" Type="int" />
+    <Property Name="Answer" Type="nvarchar(max)" />
+    <Property Name="AnsweredById" Type="int" />
+    <Property Name="AnswerDate" Type="datetime" />
+    <Property Name="IsDeleted" Type="bit" />
+  </EntityType>
+  <EntityType Name="ConsultType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ConsultTypeName" Type="nvarchar(max)" />
+  </EntityType>
   <EntityType Name="Doctor">
     <Key>
       <PropertyRef Name="ID" />
@@ -203,10 +234,11 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="MedicineId" Type="int" />
     <Property Name="RequestPharamcyId" Type="int" />
-    <Property Name="Amount" Type="nvarchar(max)" />
+    <Property Name="RequestedAmount" Type="nvarchar(max)" />
     <Property Name="RequestDate" Type="datetime" />
     <Property Name="RespondPharamacyId" Type="int" />
     <Property Name="RespondDate" Type="datetime" />
+    <Property Name="RespondedAmount" Type="nvarchar(max)" />
     <Property Name="IsDeleted" Type="bit" />
     <Property Name="LatestRequestStatusId" Type="int" />
   </EntityType>
@@ -366,6 +398,54 @@
       </Principal>
       <Dependent Role="ComplaintStatus">
         <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Consult_Consult">
+    <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
+    <End Role="Consult" Type="Self.Consult" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Consult">
+        <PropertyRef Name="QuestionerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Consult_ConsultType">
+    <End Role="ConsultType" Type="Self.ConsultType" Multiplicity="0..1" />
+    <End Role="Consult" Type="Self.Consult" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ConsultType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Consult">
+        <PropertyRef Name="ConsultTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ConsultAnswer_Consult">
+    <End Role="Consult" Type="Self.Consult" Multiplicity="0..1" />
+    <End Role="ConsultAnswer" Type="Self.ConsultAnswer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Consult">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ConsultAnswer">
+        <PropertyRef Name="ConsultId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ConsultAnswer_Member">
+    <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
+    <End Role="ConsultAnswer" Type="Self.ConsultAnswer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Member">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ConsultAnswer">
+        <PropertyRef Name="AnsweredById" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -582,6 +662,9 @@
     <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Complaint" EntityType="Self.Complaint" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ComplaintStatus" EntityType="Self.ComplaintStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Consult" EntityType="Self.Consult" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ConsultAnswer" EntityType="Self.ConsultAnswer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ConsultType" EntityType="Self.ConsultType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Doctor" EntityType="Self.Doctor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Donator" EntityType="Self.Donator" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
@@ -636,6 +719,22 @@
     <AssociationSet Name="FK_ComplaintStatus_Status" Association="Self.FK_ComplaintStatus_Status">
       <End Role="Status" EntitySet="Status" />
       <End Role="ComplaintStatus" EntitySet="ComplaintStatus" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Consult_Consult" Association="Self.FK_Consult_Consult">
+      <End Role="Member" EntitySet="Member" />
+      <End Role="Consult" EntitySet="Consult" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Consult_ConsultType" Association="Self.FK_Consult_ConsultType">
+      <End Role="ConsultType" EntitySet="ConsultType" />
+      <End Role="Consult" EntitySet="Consult" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ConsultAnswer_Consult" Association="Self.FK_ConsultAnswer_Consult">
+      <End Role="Consult" EntitySet="Consult" />
+      <End Role="ConsultAnswer" EntitySet="ConsultAnswer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ConsultAnswer_Member" Association="Self.FK_ConsultAnswer_Member">
+      <End Role="Member" EntitySet="Member" />
+      <End Role="ConsultAnswer" EntitySet="ConsultAnswer" />
     </AssociationSet>
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
