@@ -16,7 +16,7 @@ namespace GradProjectV5
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Consult", action = "Create", id = UrlParameter.Optional }
+                defaults: new { controller = "Consult", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

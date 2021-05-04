@@ -51,14 +51,21 @@ namespace GradProjectV5.Controllers
         }
 
 
-        public dynamic LoadQuestions()
+        [HttpGet]
+        public dynamic LoadQuestionsView()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public dynamic LoadQuestionsForAnswer()
         {
             MyProjectDBEntities db = new MyProjectDBEntities();
             var userid = User.Identity.GetUserId();
             var member = db.Members.FirstOrDefault(x => x.UserId == userid);
             var tmp = db.Consults.Where(x => x.IsDeleted == false && x.ConsultAnswers.FirstOrDefault(c =>c.AnsweredById ==member.ID)== null).Select(x => new
             {
-
+                x.ID,
                 AvailableFilePath = x.AvailableFilePath == null ? "" : x.AvailableFilePath,
                 ConsultQuestionTitle = x.ConsultQuestionTitle == null ? "" : x.ConsultQuestionTitle,
                 ConsultQuestionName = x.ConsultQuestionName == null ? "" : x.ConsultQuestionName,
@@ -77,7 +84,7 @@ namespace GradProjectV5.Controllers
             return Json(tmp, JsonRequestBehavior.AllowGet);
         }
 
-
+        [HttpGet]
         public dynamic LoadQuestionsWithAnswers()
         {
             MyProjectDBEntities db = new MyProjectDBEntities();
@@ -129,7 +136,7 @@ namespace GradProjectV5.Controllers
                 consult.QuestionerId = member.ID;
             if (Session["ConsultFile"] != null)
             {
-                List<string>   consultfileList = (List<string>) Session["ConsultFile"];
+                List<string>consultfileList = (List<string>) Session["ConsultFile"];
                 consult.AvailableFilePath = consultfileList[0];
                 Session.Remove("ConsultFile");
 
@@ -145,8 +152,23 @@ namespace GradProjectV5.Controllers
 
             return RedirectToAction("Index");
         }
-
-
+        [HttpPost]
+        public dynamic SaveConsultAnswer(int consultid, string answer)
+        {
+            MyProjectDBEntities db = new MyProjectDBEntities();
+            var userid = User.Identity.GetUserId();
+            var member = db.Members.FirstOrDefault(x => x.UserId == userid);
+            ConsultAnswer consultAnswer = new ConsultAnswer();
+            consultAnswer.AnswerDate = DateTime.Now;
+            consultAnswer.IsDeleted = false;
+            consultAnswer.Answer = answer;
+            consultAnswer.ConsultId = consultid;
+            if (member != null)
+                consultAnswer.AnsweredById = member.ID;
+            db.ConsultAnswers.Add(consultAnswer);
+            db.SaveChanges();
+            return "تم تسجيل ردك بنجاح";
+        }
 
         #region consult_files
 

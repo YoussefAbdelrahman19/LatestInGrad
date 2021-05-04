@@ -7,18 +7,36 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/all.min.css" rel="stylesheet" />
-    @*<style>
-       nav div div ul li.dropdown {
+    <style>
+      /*  .navbar div.collapse ul li.dropdown {
             position: relative;
+            display: inline-block;
         }
         .navbar div li ul#ddl_phar {
             display: none;
+            position: absolute;
+            z-index: 1;
         }
-        .navbar div.collapse ul li.dropdown:hover   {
+        .navbar div.collapse ul li.dropdown:hover + ul  {
+            display: block !important;
+            color: white !important;
+        }*/
+       .navbar div li ul#ddl_phar {
+            display: none;
+
+        }
+        .navbar div.collapse ul li.dropdown:hover ul {
             display: block !important;
             color: white !important;
         }
-    </style>*@
+    </style>
+    @*<script>
+        $(".navbar div li ul#ddl_phar").hide();
+        $("button").mouseover(function(){
+            $("p").hide();
+        });
+    </script>*@
+   
 
 </head>
 <body class="bg-white">
@@ -33,27 +51,32 @@
                     <li class="nav-item">
                         <a class="nav-link fw-bold text-light" aria-current="page" href="/Home/Index">الرئيسية</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link fw-bold text-light text-nowrap " href="/Home/AskDoctor">استشارة طبيب</a>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">إستشارة طبيب</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="ddl_phar">
+                            <li><a class="dropdown-item" href="@Url.Action("Create","Consult")">إضافة سؤال</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("LoadQuestionsView","Consult")">الرد علي سؤال</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Index","Consult")">أسئلة وإجابات مجانية</a></li>
+
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link fw-bold text-light text-nowrap" href="/Home/DontatingMedicine">التبرع بالدواء</a>
                     </li>
-                   
-                    
+
+
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            صيدليات
-                        </a>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">صيدليات</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown" id="ddl_phar">
                             <li><a class="dropdown-item" href="@Url.Action("Create","Pharmacy")">إضافة صيدلية</a></li>
                             <li><a class="dropdown-item" href="@Url.Action("AllPhMedicineRequests","Pharmacy")">التبرع بدواء</a></li>
                             <li><a class="dropdown-item" href="@Url.Action("RequestMedicine","Pharmacy")">طلب دواء</a></li>
-                   
+
                         </ul>
                     </li>
 
-                   
+
                 </ul>
                     
                 <div class="loginAndRegister">@Html.Partial("_LoginPartial")</div> 
@@ -113,7 +136,8 @@
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     @RenderSection("scripts", required: false)
-    <script src="~/Scripts/all.min.js"></script>
+<script src="~/Scripts/all.min.js"></script>
+
 </body>
 </html>
 
