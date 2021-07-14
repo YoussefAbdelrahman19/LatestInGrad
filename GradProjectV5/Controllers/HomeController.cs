@@ -119,7 +119,7 @@ namespace GradProjectV5.Controllers
 
 
             string File_Name = respons.ToString();
-            ;
+            
 
 
             List<string> DicFile = new List<string>();

@@ -15,11 +15,12 @@ namespace GradProjectV5.Models
 
     public class ConsultAnnotations
     {
-        [Required]
+        [Required(ErrorMessage = "يتطلب ادخال حقل عنوان الإستشارة")]
         [Display(Name = "عنوان الإستشارة")]
 
         public string ConsultQuestionTitle { get; set; }
-        [Required]
+        [Required(ErrorMessage = "يتطلب ادخال حقل الإستشارة")]
+
         [Display(Name = "الإستشارة ")]
         [DataType(DataType.MultilineText)]
         public string ConsultQuestionName { get; set; }
